@@ -6,7 +6,7 @@
 #    By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:15:31 by vkettune          #+#    #+#              #
-#    Updated: 2024/03/22 07:30:27 by vkettune         ###   ########.fr        #
+#    Updated: 2024/03/22 13:40:04 by vkettune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,9 @@ LIBFT = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 		ft_lstadd_front.c ft_lstdelone.c ft_lstlast.c ft_lstnew.c ft_lstsize.c
 PRINTF = ft_printf.c ft_print.c ft_utils.c
 GNL = get_next_line.c get_next_line_utils.c
-SOURCES = $(addprefix $(SRCS_DIR)libft/, $(LIBFT)) \
-		$(addprefix $(SRCS_DIR)ft_printf/, $(PRINTF)) \
-		$(addprefix $(SRCS_DIR)gnl/, $(GNL))
+SOURCES = $(addprefix $(SRCS_DIR), $(LIBFT)) \
+		$(addprefix $(SRCS_DIR), $(PRINTF)) \
+		$(addprefix $(SRCS_DIR), $(GNL)) 
 
 # OBJECT FILES
 LIBFT_OBJ = $(addprefix $(OBJS_DIR), $(LIBFT:.c=.o))
@@ -57,13 +57,13 @@ PRINTF_OBJ = $(addprefix $(OBJS_DIR), $(PRINTF:.c=.o))
 GNL_OBJ = $(addprefix $(OBJS_DIR), $(GNL:.c=.o))
 OBJECTS = $(LIBFT_OBJ) $(PRINTF_OBJ) $(GNL_OBJ)
 
-all: $(NAME)
+all: libft ft_printf get_next_line $(NAME)
 
-$(OBJECTS) : $(SOURCES)
-	@cc $(CFLAGS) -c $< -o $@
-	@echo "$(LIGHT_GRAY)Compiled: $(notdir $@) $(X)"
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c
+	@cc $(CFLAGS) -c $< -o $@ && echo "$(DARK_GRAY)Compiled: $(notdir $@) $(X)"
 
-$(NAME): libft ft_printf get_next_line
+$(NAME): $(OBJECTS)
+# @cc $(OBJECTS) $(HEADERS) -o $(NAME)
 
 libft: $(LIBFT_OBJ)
 	@ar -rc $(NAME) $(LIBFT_OBJ)
