@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:08:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/25 11:21:10 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:59:06 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ void clean_grid(t_grid **grid, int scale[])
 	int	x;
 	int	y;
 
-	y = 0;
-	while (y < scale[1])
+	x = 0;
+	while (x < scale[0])
 	{
-		x = 0;
-		while (x < scale[0])
+		y = 0;
+		while (y < scale[1])
 		{
 			if (grid[y][x].tile == 'X')
 				grid[y][x].tile = '0';
 			if (grid[y][x].tile == 'Y')
 				grid[y][x].tile = 'C';
-			x++;
+			y++;
 		}
-		y++;
+		x++;
 	}
 }
 
