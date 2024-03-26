@@ -6,10 +6,11 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:11:53 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 19:13:15 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:54:56 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "so_long_bonus.h"
 #include "so_long.h"
 
 mlx_image_t	*load_img(mlx_t *mlx, char *file)
@@ -38,6 +39,10 @@ int init_images(mlx_t *mlx, t_map *map)
 	if (resize_images(map->images, map->tile_size) == 0)
 		return (0);
 	if (place_images(mlx, map, &map->images) == 0)
+		return (0);
+	if (load_player_animation(mlx, map, map->action) == 0)
+		return (0);
+	if (resize_player_animation(map->player_animation, map->tile_size) == 0)
 		return (0);
 	return (1);
 }

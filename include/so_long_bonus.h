@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 11:36:09 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 17:05:37 by vkettune         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -28,6 +16,22 @@
 #  define PLAYER_TEXTURE "./textures/still_animation/duck_still1.png"
 #  define EXIT_TEXTURE "./textures/door_animation/door_closed.png"
 #  define COIN_TEXTURE "./textures/collectable/coin.png"
+
+#  define IDLE_0 ".textures/still_animation/duck1.png"
+#  define IDLE_1 ".textures/still_animation/duck2.png"
+
+#  define WALK_0 ".textures/walk_animation/duck_walk1.png"
+#  define WALK_1 ".textures/walk_animation/duck_walk2.png"
+#  define WALK_2 ".textures/walk_animation/duck_walk3.png"
+#  define WALK_3 ".textures/walk_animation/duck_walk4.png"
+#  define WALK_4 ".textures/walk_animation/duck_walk5.png"
+#  define WALK_5 ".textures/walk_animation/duck_walk6.png"
+
+#  define COIN_0 ".textures/collectable/coin.png"
+#  define COIN_1 ".textures/collectable/coin2.png"
+
+#  define DOOR_0 ".textures/collectable/coin.png"
+#  define DOOR_1 ".textures/collectable/coin2.png"
 
 typedef struct s_textures
 {
@@ -64,19 +68,31 @@ typedef struct s_player
 	int					y;
 	mlx_image_t	*img;
 	int					inst;
+	mlx_image_t	*idle_animation[2];
+	mlx_image_t	*walk_animation[6];
 }	t_player;
+
+typedef struct s_animation
+{
+	mlx_image_t	*player_idle_animation[2];
+	mlx_image_t	*player_walk_animation[6];
+} t_animation;
 
 typedef struct s_map
 {
-	t_grid		**grid;
-	mlx_t			*mlx;
-	t_player	player;
-	t_images	images;
-	int				scale[2];
-	int				collectables;
-	int				moves;
-	int				won;
-	int				tile_size;
+	t_grid			**grid;
+	mlx_t				*mlx;
+	t_player		player;
+	t_images		images;
+	int					scale[2];
+	int					collectables;
+	int					moves;
+	int					won;
+	int					tile_size;
+	int					action; // idle or walking?
+	t_animation *player_animation;
+	mlx_image_t	*coin_animation[2];
+	mlx_image_t	*door_animation[2];
 }	t_map;
 
 // error_and_free.c
@@ -132,5 +148,12 @@ t_map	*parse_map(char *file);
 void	collect(t_map *map, int y, int x);
 void	move_player_texture(t_map *map, int up, int right);
 void	move_player(t_map *map, int up, int right);
+
+// init_animations.c
+int	init_player_idle(mlx_t *mlx, t_map *map);
+int	init_player_walk(mlx_t *mlx, t_map *map);
+int	init_coin(mlx_t *mlx, t_map *map);
+
+// load_animations.c
 
 #endif
