@@ -6,7 +6,7 @@
 #    By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 11:14:33 by vkettune          #+#    #+#              #
-#    Updated: 2024/03/25 10:17:25 by vkettune         ###   ########.fr        #
+#    Updated: 2024/03/26 15:09:22 by vkettune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,21 +32,6 @@ NAME = so_long
 CFLAGS = -Wall -Wextra -Werror $(HEADERS)
 HEADERS = -I ./include -I ./libs/MLX42/include/MLX42
 
-# Debugging
-DEBUG_NAME = debug.out
-DEBUG_FLAGS = $(CFLAGS) -g -fsanitize=address,undefined,integer
-DEBUG_OBJ_DIR = objs/debug_objs/
-
-$(DEBUG_OBJ_DIR)%.o: $(SRCS_DIR)%.c $(HEADERS)
-	@mkdir -p $(DEBUG_OBJ_DIR)$(subst $(SRCS_DIR),,$(dir $<))
-	@echo Building debug $<
-	@$(CC) $(DEBUG_FLAGS) -c $< -o $@
- 
-$(DEBUG_NAME): $(DEBUG_OBJS)
-	@echo Compiling debug executable
-	@$(CC) $(DEBUG_FLAGS) $(DEBUG_OBJS) -o $@
-	@echo Debug done
-
 # Libraries
 LIBFT = ./libs/libft/libft.a
 MLX42 = $(MLX42_DIR)build/libmlx42.a
@@ -62,11 +47,13 @@ SRCS_DIR = srcs/
 OBJS_DIR = objs/
 
 # fetch.c
-FILES = free.c errors.c game.c grid.c \
- main.c map.c get.c images.c move_player.c 
+FILES = errors_and_free.c game.c grid.c \
+ main.c map.c get.c init_images.c move_player.c \
+ place_img.c resize.c
 SOURCES = $(addprefix $(SRCS_DIR), $(FILES))
 OBJECTS = $(addprefix $(OBJS_DIR), $(FILES:.c=.o))
 
+# everything that's needed for compiling the program
 all: folders libft mlx42 $(NAME)
 	@echo "$(GREEN)- - - - - - - - - - - - - - - - - - - - - - -$(X)"
 	@echo "$(GREEN)Run the program with ./$(NAME)$(X)"
@@ -77,8 +64,6 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 $(NAME): $(OBJECTS)
 	@cc $(OBJECTS) $(LIBS) $(HEADERS) -o $(NAME)
 	@echo "$(DARK_MAGENTA)- - ✨✨✨✨ $(NAME) compiled! ✨✨✨✨ - -$(X)"
-
-debug: debug.out
 
 folders:
 	@mkdir -p $(OBJS_DIR)

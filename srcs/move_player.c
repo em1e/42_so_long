@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/25 14:22:42 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:22:39 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void collect(t_map *map, int y, int x)
 {
 	mlx_instance_t	*object;
+	
 	ft_printf("found coin!\n"); // remove
 	object = get_object(map, y, x);
 	ft_printf("1 coin collected!\n"); // remove
@@ -33,8 +34,6 @@ void	move_player_texture(t_map *map, int up, int right)
 
 void move_player(t_map *map, int up, int right) 
 {
-	static int	moves;
-	static int	won;
 	t_grid			target_pos;
 	t_player		*player;
 	
@@ -56,13 +55,13 @@ void move_player(t_map *map, int up, int right)
 	map->grid[player->y][player->x].tile = 'P';
 	ft_printf("moved_to->y: %d\n", player->y); // remove
 	ft_printf("moved_to->x: %d\n", player->x); // remove
-	moves++;
-	if (won == 0)
-		ft_printf("Moves: %d\n", moves);
+	map->moves++;
+	if (map->won == 0)
+		ft_printf("Moves: %d\n", map->moves);
 	move_player_texture(map, up, right);
-	if (target_pos.tile == 'E')
+	if (target_pos.tile == 'E' && map->collectables == 0)
 	{
-		ft_printf("You won!\n");
-		won = 1;
+		map->won = 1;
+		end_game(map, map->mlx, map->won);
 	}
 }

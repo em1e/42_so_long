@@ -6,39 +6,11 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:46:13 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/25 12:59:53 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:01:46 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// check file, file extension, and path/file access
-// check collectables, exits, player, walls, and map size
-
-t_grid	**init_grid(char *file, int scale[], t_player *player) 
-{
-	t_grid	**grid;
-	int			map_fd;
-
-	map_fd = open(file, O_RDONLY);
-	if (map_fd == -1)
-		return (0);
-	grid = malloc(sizeof(t_grid *) * scale[1] + 1);
-	if (grid == 0)
-	{
-		close(map_fd);
-		return (0);
-	}
-	if (!fill_grid(grid, scale, map_fd) || !check_grid(grid, scale, player)) // player pos not filled correctly
-	{
-		free_grid(grid);
-		close(map_fd);
-		return (0);
-	}
-	close(map_fd);
-	ft_printf("grid created and filled\n");
-	return (grid);
-}
 
 int	check_line(char *line, int pce[], int width)
 {
@@ -48,12 +20,11 @@ int	check_line(char *line, int pce[], int width)
 	while (line[i] != '\n' && line[i] != '\0')
 	{
 		if ((i == 0 || i == width - 1) && line[i] != '1')
-			return (error("map is not surrounded by walls"));
 		if (!ft_strchr("01PCE", line[i]))
 			return (error("map contains an invalid character"));
-		if (line[i] == 'P' && pce[0] > 0)
+		if (line[i] == 'P' && pce[0] != 0)
 			return (error("map contains multiple players"));
-		if (line[i] == 'E' && pce[2] > 0)
+		if (line[i] == 'E' && pce[2] != 0)
 			return (error("map contains multiple exits"));
 		if (line[i] == 'P')
 			pce[0]++;
@@ -64,7 +35,7 @@ int	check_line(char *line, int pce[], int width)
 		i++;
 	}
 	if (i != width)
-		return (map_error("map is not rectangular"));
+		return (error("map is not rectangular"));
 	return (1);
 }
 
@@ -113,13 +84,13 @@ int	check_map(char *file, int scale[])
 	ft_printf("end: %s", end); // remove
 	if (end == 0 || ft_strncmp(end, ".ber", 5) != 0)
 	{
-		close (map_fd);
-		return (map_error("map does not end with .ber"));
+		close(map_fd);
+		return (error("map does not end with .ber"));	
 	}
 	collectables = check_map_content(map_fd, scale);
 	close(map_fd);
 	if (!collectables)
-		return (-1);
+		return (0);
 	return (collectables);
 }
 
@@ -136,12 +107,13 @@ t_map	*parse_map(char *file)
 		free(map);
 		return (0);
 	}
-	map->grid = init_grid(file, map->scale, &map->player); // fix
+	map->grid = init_grid(file, map->scale, &map->player);
 	if (map->grid == 0)
 	{
 		free(map);
 		return (0); 
 	}
 	map->tile_size = TILE_SIZE;
+	map->won = 0;
 	return (map);
 }

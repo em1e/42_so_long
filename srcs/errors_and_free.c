@@ -1,20 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test2.c                                            :+:      :+:    :+:   */
+/*   errors_and_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 13:37:32 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/22 08:22:37 by vkettune         ###   ########.fr       */
+/*   Created: 2024/03/24 13:21:43 by vkettune          #+#    #+#             */
+/*   Updated: 2024/03/26 14:38:21 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "so_long.h"
 
-// int	ft_putchar(char c)
-// {
-// 	write(1, &c, 1);
-//     return (0);
-// }
+int	error(char *msg)
+{
+	ft_printf("Error: %s\n", msg);
+	return (0);
+}
+
+int	game_error(mlx_t *mlx, t_map *map, char *msg, int won)
+{
+	ft_printf("Error: %s", msg);
+	end_game(map, mlx, won);
+	return (0);
+}
+
+int	free_map(t_map *map)
+{
+	free_grid(map->grid);
+	free(map);
+	return (0);
+}
+
+int	free_grid(t_grid **grid)
+{
+	int	i;
+
+	i = 0;
+	while (grid[i] != 0)
+	{
+		free(grid[i]);
+		i++;
+	}
+	free(grid);
+	return (0);
+}
