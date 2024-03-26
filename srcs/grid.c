@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:08:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 15:49:43 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:31:49 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	check_path(t_grid **grid, int scale[], int y, int x)
 	if (grid[y][x].tile == 'E' || grid[y][x].tile == 'C')
 	{
 		if (!find_path(grid, y, x))
-			return (error("no valid path to exit - A\n"));
+			return (error("no valid path to exit\n"));
 		clean_grid(grid, scale);
 	}
 	return (1);
