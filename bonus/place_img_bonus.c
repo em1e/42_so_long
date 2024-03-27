@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   place_img.c                                        :+:      :+:    :+:   */
+/*   place_img_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:44:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 15:31:54 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:25:55 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	place_tile(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 {
@@ -83,5 +83,6 @@ int	place_images(mlx_t *mlx, t_map *map, t_images *images)
 		}
 		y++;
 	}
+	print_movements(map);
 	return (1);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   grid.c                                             :+:      :+:    :+:   */
+/*   grid_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:08:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 16:31:49 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:41:41 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	find_path(t_grid **grid, int y, int x)
 {
@@ -66,8 +66,18 @@ int	check_path(t_grid **grid, int scale[], int y, int x)
 	if (grid[y][x].tile == 'E' || grid[y][x].tile == 'C')
 	{
 		if (!find_path(grid, y, x))
-			return (error("no valid path to exit\n"));
+			return (error("no valid path to exit"));	
 		clean_grid(grid, scale);
+	}
+	return (1);
+}
+
+int	check_walls(t_grid **grid, int scale[], int y, int x)
+{
+	if (y == 0 || y == scale[1] - 1)
+	{
+		if (grid[y][x].tile != '1')
+			return (error("map is not surrounded by walls"));
 	}
 	return (1);
 }
@@ -83,11 +93,8 @@ int	check_grid(t_grid **grid, int scale[], t_player *player)
 		x = 0;
 		while (x < scale[0])
 		{
-			if (y == 0 || y == scale[1] - 1)
-			{
-				if (grid[y][x].tile != '1')
-					return (error("map is not surrounded by walls\n"));
-			}
+			if (!check_walls(grid, scale, y, x))
+				return (0);
 			if (!check_path(grid, scale, y, x))
 				return (0);
 			if (grid[y][x].tile == 'P')
@@ -140,7 +147,7 @@ t_grid	**init_grid(char *file, int scale[], t_player *player)
 	map_fd = open(file, O_RDONLY);
 	if (map_fd == -1)
 		return (0);
-	grid = malloc(sizeof(t_grid *) * scale[1] + 1);
+	grid = ft_calloc(sizeof(t_grid *), scale[1] + 1);
 	if (grid == 0)
 	{
 		close(map_fd);

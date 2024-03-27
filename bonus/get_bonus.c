@@ -6,11 +6,11 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:14:46 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/25 12:34:41 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 05:58:04 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 mlx_instance_t	*get_tile(t_map *map, int y, int x)
 {

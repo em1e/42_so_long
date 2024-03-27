@@ -6,7 +6,7 @@
 #    By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 11:14:33 by vkettune          #+#    #+#              #
-#    Updated: 2024/03/26 15:09:22 by vkettune         ###   ########.fr        #
+#    Updated: 2024/03/27 07:58:57 by vkettune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,32 +32,37 @@ NAME = so_long
 CFLAGS = -Wall -Wextra -Werror $(HEADERS)
 HEADERS = -I ./include -I ./libs/MLX42/include/MLX42
 
-# Libraries
 LIBFT = ./libs/libft/libft.a
 MLX42 = $(MLX42_DIR)build/libmlx42.a
 
 LIBFT_OBJ = ./libs/libft/objs/
 MLX42_DIR = ./libs/MLX42/
 
-# LIBS = $(LIBFT) $(MLX42) $(DEPEND)
 LIBS = $(LIBFT) $(MLX42) -Iinclude -lglfw \
 		-L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 SRCS_DIR = srcs/
+BONUS_DIR = bonus/
 OBJS_DIR = objs/
 
-# fetch.c
 FILES = errors_and_free.c game.c grid.c \
  main.c map.c get.c init_images.c move_player.c \
  place_img.c resize.c
+BONUS_FILES = errors_and_free_bonus.c game_bonus.c grid_bonus.c \
+ main_bonus.c map_bonus.c get_bonus.c init_images_bonus.c move_player_bonus.c \
+ place_img_bonus.c resize_bonus.c animations_init_bonus.c animations_bonus.c 
+
 SOURCES = $(addprefix $(SRCS_DIR), $(FILES))
 OBJECTS = $(addprefix $(OBJS_DIR), $(FILES:.c=.o))
 
-# everything that's needed for compiling the program
+BONUS_SOURCES = $(addprefix $(BONUS_DIR), $(BONUS_FILES))
+BONUS_OBJECTS = $(addprefix $(OBJS_DIR), $(BONUS_FILES:.c=.o))
+
+# GENERAL
 all: folders libft mlx42 $(NAME)
 	@echo "$(GREEN)- - - - - - - - - - - - - - - - - - - - - - -$(X)"
 	@echo "$(GREEN)Run the program with ./$(NAME)$(X)"
-	
+
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	@cc $(CFLAGS) -c $< -o $@ && echo "$(DARK_GRAY)Compiled: $@ $(X)"
 
@@ -65,6 +70,40 @@ $(NAME): $(OBJECTS)
 	@cc $(OBJECTS) $(LIBS) $(HEADERS) -o $(NAME)
 	@echo "$(DARK_MAGENTA)- - ✨✨✨✨ $(NAME) compiled! ✨✨✨✨ - -$(X)"
 
+clean:
+	@clear
+	@rm -rf $(OBJS_DIR)
+	@rm -rf $(MLX42_DIR)build/
+	@make -C ./libs/libft/ clean
+	@echo "$(DARK_MAGENTA)- - - - -❗All object files cleaned❗- - - - -$(X)"
+
+fclean: clean
+	@rm -f $(NAME)
+	@rm -f $(LIBFT)
+	@echo "$(DARK_MAGENTA)- - - -❗All executable files cleaned❗- - - -$(X)"
+
+re: fclean all
+	@echo "$(DARK_MAGENTA)Sucessfully cleaned and rebuilt everything\n$(X)"
+
+# BONUS
+bonus: bonus_clean $(BONUS_OBJECTS)
+	@cc $(BONUS_OBJECTS) $(LIBS) $(HEADERS) -o $(NAME)
+	@echo "$(DARK_MAGENTA)- - ✨✨✨✨ Bonus compiled! ✨✨✨✨ - -$(X)"
+
+$(OBJS_DIR)%.o: $(BONUS_DIR)%.c
+	@cc $(CFLAGS) -c $< -o $@ && echo "$(DARK_GRAY)Compiled: $@ $(X)"
+
+bonus_clean:
+	@rm -rf $(OBJS_DIR)
+	@rm -f $(NAME)
+	@mkdir -p $(OBJS_DIR)
+
+re_bonus: fclean folders libft mlx42 bonus
+	@echo "$(DARK_MAGENTA)Sucessfully cleaned and rebuilt bonus$(X)"
+	@echo "$(GREEN)- - - - - - - - - - - - - - - - - - - - - - -$(X)"
+	@echo "$(GREEN)Run the program with ./$(NAME)$(X)"
+
+# OTHER RULES
 folders:
 	@mkdir -p $(OBJS_DIR)
 	@mkdir -p $(LIBFT_OBJ)
@@ -83,18 +122,3 @@ mlx42: clone_mlx42
 
 libft:
 	@make -C ./libs/libft
-
-clean:
-	@clear
-	@rm -rf $(OBJS_DIR)
-	@rm -rf $(MLX42_DIR)build/
-	@make -C ./libs/libft/ clean
-	@echo "$(DARK_MAGENTA)- - - - -❗All object files cleaned❗- - - - -$(X)"
-
-fclean: clean
-	@rm -f $(NAME) $(DEBUG_NAME)
-	@rm -f $(LIBFT)
-	@echo "$(DARK_MAGENTA)- - - -❗All executable files cleaned❗- - - -$(X)"
-
-re: fclean all
-	@echo "$(DARK_MAGENTA)Sucessfully cleaned and rebuilt everything$(X)"

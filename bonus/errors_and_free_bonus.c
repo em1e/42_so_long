@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors_and_free_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 13:37:32 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 14:20:20 by vkettune         ###   ########.fr       */
+/*   Created: 2024/03/24 13:21:43 by vkettune          #+#    #+#             */
+/*   Updated: 2024/03/27 14:37:11 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-int	main(int argc, char **argv)
+int	error(char *msg)
 {
-	t_map	*map;
-    
-	if (argc < 2)
-		return (error("no map argument given, use format: ./so_long [map]"));
-	if (argc > 2)
-		return (error("too many arguments, use format: ./so_long [map]"));
-	map = parse_map(argv[1]);
-	if (map == 0)
-		return (1);
-	ft_printf("Map parsed\n");
-	if (start_game(map) == 0)
-		return (1);
-	free_map(map);
-	ft_printf("map freed\n");
+	ft_printf("Error: %s\n", msg);
+	return (0);
+}
+
+int	game_error(mlx_t *mlx, t_map *map, char *msg, int won)
+{
+	ft_printf("Error: %s\n", msg);
+	end_game(map, mlx, won);
+	return (0);
+}
+
+int	free_grid(t_grid **grid)
+{
+	int	i;
+
+	i = 0;
+	while (grid[i] != 0)
+	{
+		free(grid[i]);
+		i++;
+	}
+	free(grid);
 	return (0);
 }

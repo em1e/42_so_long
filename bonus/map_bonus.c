@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   map_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:46:13 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 16:34:39 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:40:04 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	check_line(char *line, int pce[], int width)
 {
@@ -52,7 +52,6 @@ int	check_map_content(int map_fd, int scale[])
 		scale[0]++;
 	ft_bzero(pce, 3 * sizeof(int));
 	scale[1] = 0;
-	ft_printf("\n"); // remove
 	while (line != 0)
 	{
 		ft_printf("%s", line); // remove
@@ -67,7 +66,7 @@ int	check_map_content(int map_fd, int scale[])
 	}
 	if (pce[0] == 0 || pce[1] == 0 || pce[2] == 0)
 		return (error("map is missing a required character"));
-	ft_printf("collectables: %d\n", pce[1]); // remove
+	ft_printf("\ncollectables: %d\n", pce[1]); // remove
 	return (pce[1]);
 }
 
@@ -81,7 +80,7 @@ int	check_map(char *file, int scale[])
 	if (map_fd == -1)
 		return (error("invalid map_path or map"));
 	end = ft_strrchr(file, '.');
-	ft_printf("end: %s", end); // remove
+	ft_printf("end: %s\n", end); // remove
 	if (end == 0 || ft_strncmp(end, ".ber", 5) != 0)
 	{
 		close(map_fd);

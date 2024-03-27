@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   game_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:37:32 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 16:23:54 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:10:23 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <unistd.h>
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	window_input_hook(void *param)
 {
@@ -57,15 +56,17 @@ void	end_game(t_map *map, mlx_t *mlx, int won)
 	total_moves = map->moves;
 	if (won == 1)
 	{
-		ft_printf("- - - - - - - - - - -\n");
-		ft_printf("You won the game!\n");
-		ft_printf("Is winning with %d moves the best you can do?\nWhy not try again? C:\n", total_moves);
+		ft_printf("- - - - -✨  VICTORY ✨ - - - - - -\n");
+		ft_printf("You've won the game!\n");
+		ft_printf("Is winning with %d moves the best you can do?\nWhy not try again?\n", total_moves);
 	}
-	if (won == 0)
+	else if (won == 0)
 	{
-		ft_printf("You giving up already?\n");
-		ft_printf("why not try again?\n");	
+		ft_printf("Giving up already?\n");
+		ft_printf("Why not try again?\n");	
 	}
+	else 
+		ft_printf("error\n");
 	free(map);
 	mlx_close_window(mlx);
 	mlx_terminate(mlx);
@@ -76,7 +77,6 @@ int	start_game(t_map *map)
 {
 	mlx_t	*mlx;
 	
-	mlx = map->mlx;
 	mlx = mlx_init(map->scale[0] * map->tile_size, 
 		map->scale[1] * map->tile_size, "so_long", false);
 	if (mlx == 0)
@@ -87,6 +87,8 @@ int	start_game(t_map *map)
 		return (game_error(mlx, map, "unable to load images", -1));
 	mlx_key_hook(mlx, &player_key_hooks, map); 
 	if (mlx_loop_hook(mlx, &window_input_hook, mlx) == 0)
+		return (game_error(mlx, map, "game error B", -1));
+	if (mlx_loop_hook(mlx, &anim_update_hook, map) == 0)
 		return (game_error(mlx, map, "game error B", -1));
 	ft_printf("- - - game started - - -\n\n"); // remove
 	mlx_loop(mlx);

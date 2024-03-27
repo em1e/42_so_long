@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 11:36:09 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 17:05:37 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:22:26 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct s_map
 // error_and_free.c
 int	error(char *msg);
 int	game_error(mlx_t *mlx, t_map *map, char *msg, int won);
-int	free_map(t_map *map);
 int	free_grid(t_grid **grid);
 
 // game.c

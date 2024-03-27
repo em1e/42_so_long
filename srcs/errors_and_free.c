@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:21:43 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 19:08:54 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:19:45 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@ int	game_error(mlx_t *mlx, t_map *map, char *msg, int won)
 {
 	ft_printf("Error: %s", msg);
 	end_game(map, mlx, won);
-	return (0);
-}
-
-int	free_map(t_map *map)
-{
-	free_grid(map->grid);
-	free(map);
 	return (0);
 }
 

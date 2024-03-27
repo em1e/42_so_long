@@ -11,27 +11,31 @@
 #  define TILE_SIZE 32
 # endif
 
+#  define DELAY 0.2
+
 #  define FLOOR_TEXTURE "./textures/floor/floor1.png"
 #  define WALL_TEXTURE "./textures/wall/wall.png"
 #  define PLAYER_TEXTURE "./textures/still_animation/duck_still1.png"
 #  define EXIT_TEXTURE "./textures/door_animation/door_closed.png"
 #  define COIN_TEXTURE "./textures/collectable/coin.png"
 
-#  define IDLE_0 ".textures/still_animation/duck1.png"
-#  define IDLE_1 ".textures/still_animation/duck2.png"
+#  define IDLE_0 "./textures/still_animation/duck_still1.png"
+#  define IDLE_1 "./textures/still_animation/duck_still2.png"
 
-#  define WALK_0 ".textures/walk_animation/duck_walk1.png"
-#  define WALK_1 ".textures/walk_animation/duck_walk2.png"
-#  define WALK_2 ".textures/walk_animation/duck_walk3.png"
-#  define WALK_3 ".textures/walk_animation/duck_walk4.png"
-#  define WALK_4 ".textures/walk_animation/duck_walk5.png"
-#  define WALK_5 ".textures/walk_animation/duck_walk6.png"
+#  define WALK_0 "./textures/walk_animation/duck_walk1.png"
+#  define WALK_1 "./textures/walk_animation/duck_walk2.png"
+#  define WALK_2 "./textures/walk_animation/duck_walk3.png"
+#  define WALK_3 "./textures/walk_animation/duck_walk4.png"
+#  define WALK_4 "./textures/walk_animation/duck_walk5.png"
+#  define WALK_5 "./textures/walk_animation/duck_walk6.png"
 
-#  define COIN_0 ".textures/collectable/coin.png"
-#  define COIN_1 ".textures/collectable/coin2.png"
+#  define COIN_0 "./textures/collectable/coin.png"
+#  define COIN_1 "./textures/collectable/coin2.png"
+#  define GOLD_0 "./textures/collectable/gold.png"
+#  define GOLD_1 "./textures/collectable/gold2.png"
 
-#  define DOOR_0 ".textures/collectable/coin.png"
-#  define DOOR_1 ".textures/collectable/coin2.png"
+#  define DOOR_0 "./textures/collectable/coin.png"
+#  define DOOR_1 "./textures/collectable/coin2.png"
 
 typedef struct s_textures
 {
@@ -68,6 +72,7 @@ typedef struct s_player
 	int					y;
 	mlx_image_t	*img;
 	int					inst;
+
 	mlx_image_t	*idle_animation[2];
 	mlx_image_t	*walk_animation[6];
 }	t_player;
@@ -84,21 +89,21 @@ typedef struct s_map
 	mlx_t				*mlx;
 	t_player		player;
 	t_images		images;
-	int					scale[2];
+	int					scale[2]; // height 0, width 1
 	int					collectables;
 	int					moves;
 	int					won;
 	int					tile_size;
-	int					action; // idle or walking?
-	t_animation *player_animation;
-	mlx_image_t	*coin_animation[2];
-	mlx_image_t	*door_animation[2];
+	int					action; // idle 0, walking 1, opendoor 2
+	mlx_image_t *player_animation[2];
+	mlx_image_t	*move_img;
+	// mlx_image_t	*coin_animation[2];
+	// mlx_image_t	*door_animation[2];
 }	t_map;
 
 // error_and_free.c
 int	error(char *msg);
 int	game_error(mlx_t *mlx, t_map *map, char *msg, int won);
-int	free_map(t_map *map);
 int	free_grid(t_grid **grid);
 
 // game.c
@@ -148,12 +153,16 @@ t_map	*parse_map(char *file);
 void	collect(t_map *map, int y, int x);
 void	move_player_texture(t_map *map, int up, int right);
 void	move_player(t_map *map, int up, int right);
+void print_movements(t_map *map);
 
-// init_animations.c
-int	init_player_idle(mlx_t *mlx, t_map *map);
-int	init_player_walk(mlx_t *mlx, t_map *map);
-int	init_coin(mlx_t *mlx, t_map *map);
+// animations_init.c
+int	init_player_animation(mlx_t *mlx, t_map *map);
+// int	init_player_walk(mlx_t *mlx, t_map *map);
+// int	init_coin(mlx_t *mlx, t_map *map);
 
-// load_animations.c
+// animations.c
+int	resize_player_animation(mlx_image_t *images[], int new_size);
+void	animate_player(t_map *map);
+void	anim_update_hook(void *param);
 
 #endif

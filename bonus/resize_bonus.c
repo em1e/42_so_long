@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   resize.c                                           :+:      :+:    :+:   */
+/*   resize_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:45:14 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 15:13:56 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:47:27 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	window_size_limit(mlx_t *mlx, t_map *map)
 {
@@ -37,6 +37,20 @@ void	resize_tiles(int width, int height, void *param)
 	if (map->scale[1] * map->tile_size > height)
 		new_scale = width / map->scale[0];
 	map->tile_size = new_scale;
+}
+
+int	resize_player_animation(mlx_image_t *images[], int new_size)
+{
+	int	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		if (mlx_resize_image(images[i], new_size, new_size) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	resize_images(t_images images, int new_size)

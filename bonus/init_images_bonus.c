@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_images.c                                      :+:      :+:    :+:   */
+/*   init_images_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:11:53 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 18:54:56 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 11:17:39 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
-#include "so_long.h"
 
 mlx_image_t	*load_img(mlx_t *mlx, char *file)
 {
@@ -19,9 +18,12 @@ mlx_image_t	*load_img(mlx_t *mlx, char *file)
 	mlx_image_t	*image;
 
 	texture = mlx_load_png(file);
+	ft_printf("texture: %s\n", texture); // remove
+	ft_printf("TEST 2\n"); // remove
 	if (texture == 0)
 		return (0);
 	image = mlx_texture_to_image(mlx, texture);
+	ft_printf("1\n"); // remove
 	mlx_delete_texture(texture);
 	return (image);
 }
@@ -40,7 +42,7 @@ int init_images(mlx_t *mlx, t_map *map)
 		return (0);
 	if (place_images(mlx, map, &map->images) == 0)
 		return (0);
-	if (load_player_animation(mlx, map, map->action) == 0)
+	if (init_player_animation(mlx, map) == 0)
 		return (0);
 	if (resize_player_animation(map->player_animation, map->tile_size) == 0)
 		return (0);
