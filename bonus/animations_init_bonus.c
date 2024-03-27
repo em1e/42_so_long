@@ -6,24 +6,11 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:44:19 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 11:21:57 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:37:38 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
-
-// mlx_image_t	*load_img(mlx_t *mlx, char *file)
-// {
-// 	mlx_texture_t	*texture;
-// 	mlx_image_t	*image;
-
-// 	texture = mlx_load_png(file);
-// 	if (texture == 0)
-// 		return (0);
-// 	image = mlx_texture_to_image(mlx, texture);
-// 	mlx_delete_texture(texture);
-// 	return (image);
-// }
 
 int	init_player_animation(mlx_t *mlx, t_map *map)
 {
@@ -43,7 +30,23 @@ int	init_player_animation(mlx_t *mlx, t_map *map)
 	return (1);
 }
 
+int	init_coin(mlx_t *mlx, t_map *map)
+{
+	int		i;
+	char	*file[2];
 
+	file[0] = COIN_0;
+	file[1] = COIN_1;
+	i = 0;
+	while (i < 2)
+	{
+		map->coin_animation[i] = load_img(mlx, file[i]);
+		if (map->coin_animation[i] == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 // int	init_player_walk(mlx_t *mlx, t_map *map)
 // {
@@ -63,24 +66,6 @@ int	init_player_animation(mlx_t *mlx, t_map *map)
 // 	{
 // 		map->player_animation->player_walk_animation[i] = load_img(mlx, file[i]);
 // 		if (map->player_animation->player_walk_animation[i] == 0)
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
-	
-// int	init_coin(mlx_t *mlx, t_map *map)
-// {
-// 	int		i;
-// 	char	*file[2];
-
-// 	file[0] = COIN_0;
-// 	file[1] = COIN_1;
-// 	i = 0;
-// 	while (i < 2)
-// 	{
-// 		map->coin_animation[i] = load_img(mlx, file[i]);
-// 		if (map->coin_animation[i] == 0)
 // 			return (0);
 // 		i++;
 // 	}

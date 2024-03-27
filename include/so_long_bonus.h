@@ -72,9 +72,8 @@ typedef struct s_player
 	int					y;
 	mlx_image_t	*img;
 	int					inst;
-
-	mlx_image_t	*idle_animation[2];
-	mlx_image_t	*walk_animation[6];
+	// mlx_image_t	*idle_animation[2];
+	// mlx_image_t	*walk_animation[6];
 }	t_player;
 
 typedef struct s_animation
@@ -95,9 +94,9 @@ typedef struct s_map
 	int					won;
 	int					tile_size;
 	int					action; // idle 0, walking 1, opendoor 2
-	mlx_image_t *player_animation[2];
 	mlx_image_t	*move_img;
-	// mlx_image_t	*coin_animation[2];
+	mlx_image_t *player_animation[2];
+	mlx_image_t	*coin_animation[2];
 	// mlx_image_t	*door_animation[2];
 }	t_map;
 
@@ -157,6 +156,7 @@ void print_movements(t_map *map);
 
 // animations_init.c
 int	init_player_animation(mlx_t *mlx, t_map *map);
+int	init_coin(mlx_t *mlx, t_map *map);
 // int	init_player_walk(mlx_t *mlx, t_map *map);
 // int	init_coin(mlx_t *mlx, t_map *map);
 
@@ -164,5 +164,6 @@ int	init_player_animation(mlx_t *mlx, t_map *map);
 int	resize_player_animation(mlx_image_t *images[], int new_size);
 void	animate_player(t_map *map);
 void	anim_update_hook(void *param);
+void	animate_coin(t_map *map);
 
 #endif

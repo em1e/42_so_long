@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:44:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 12:25:55 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:17:47 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	place_player(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 {
 	if (pos->tile != 'P')
 		return (1);
+	if (mlx)
+		ft_printf("boo");
 	map->player.inst = mlx_image_to_window(mlx, images->player_img, pos->y * map->tile_size, pos->x * map->tile_size);
 	map->player.img = images->player_img;
 	if (map->player.inst == -1)
