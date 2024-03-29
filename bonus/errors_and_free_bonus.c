@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 13:21:43 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 14:37:11 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/29 10:16:10 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,12 @@ int	free_grid(t_grid **grid)
 		i++;
 	}
 	free(grid);
+	return (0);
+}
+
+int	free_map(t_map *map)
+{
+	free_grid(map->grid);
+	free(map);
 	return (0);
 }

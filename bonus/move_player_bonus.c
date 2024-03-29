@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 13:53:55 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/29 10:20:45 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void collect(t_map *map, int y, int x)
 	if (object == 0)
 		return ;
 	map->collectables--;
-	ft_printf("coins to collect: %d\n", map->collectables);
 	object->enabled = 0;
 }
 
@@ -43,20 +42,40 @@ void move(t_map *map, char old_pos, char new_pos, int up, int right)
 	map->grid[player->y][player->x].tile = new_pos;
 }
 
+int	center_text(t_map *map, int width)
+{
+	int	text;
+
+	text = map->moves;
+	if (text / 1000 > 0)
+		width = (map->scale[0] * 0.5) * TILE_SIZE - 65; // 20
+	else if (text / 100 > 0)
+		width = (map->scale[0] * 0.5) * TILE_SIZE - 60; // 15
+	else if (text / 10 > 0)
+		width = (map->scale[0] * 0.5) * TILE_SIZE - 55; // 10
+	else
+		width = (map->scale[0] * 0.5) * TILE_SIZE - 50; // 5
+	return (width);
+}
+
 void print_movements(t_map *map)
 {
-	char			*text;
+	char	*text;
+	char	*temp;
+	int		width;
 	
-	if (map->move_img == 0)
-		mlx_delete_image(map->mlx, map->move_img);
-	text = ft_itoa(map->moves);
+	width = 0;
+	temp = ft_itoa(map->moves);
+	if (temp == 0)
+		return ;
+	text = ft_strjoin("Moves: ", temp);
+	free(temp);
+	width = center_text(map, width);
 	mlx_delete_image(map->mlx, map->move_img);
-	map->move_img = mlx_put_string(map->mlx, text, 11, 7);
+	map->move_img = mlx_put_string(map->mlx, text, width, map->scale[1] * TILE_SIZE + 10);
 	map->moves++;
-	if (map->move_img == 0)
-		game_error(map->mlx, map, "unable to put string", -1);
-	if (map->won == 0)
-		ft_printf("Moves: %d\n", map->moves);
+	free(text);
+	ft_printf("Moves: %d\n", map->moves);
 }
 
 void move_player(t_map *map, int up, int right) 
@@ -65,28 +84,17 @@ void move_player(t_map *map, int up, int right)
 	t_player		*player;
 	
 	player = &map->player;
-	ft_printf("at->y: %d\n", player->y); // remove
-	ft_printf("at->x: %d\n", player->x); // remove
 	target_pos = map->grid[player->y - up][player->x + right];
-	ft_printf("coins to collect: %d\n", map->collectables);
-	if (target_pos.tile == '1' || (target_pos.tile == 'E' && map->collectables != 0))
-	{
-		ft_printf("unable to go there!\n");
+	if (target_pos.tile == '1')
 		return ;
-	}
 	if (target_pos.tile == 'C')
 		collect(map, player->y - up, player->x + right);
-	map->grid[player->y][player->x].tile = '0';
-	player->y -= up;
-	player->x += right;
-	map->grid[player->y][player->x].tile = 'P';
-	ft_printf("moved_to->y: %d\n", player->y); // remove
-	ft_printf("moved_to->x: %d\n", player->x); // remove
-	print_movements(map);
-	move_player_texture(map, up, right);
 	if (target_pos.tile == 'E' && map->collectables == 0)
 	{
 		map->won = 1;
 		end_game(map, map->mlx, map->won);
 	}
+	move(map, '0', 'P', up, right);
+	print_movements(map);
+	move_player_texture(map, up, right);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get.c                                              :+:      :+:    :+:   */
+/*   get_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:14:46 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 05:58:04 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:33:40 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ mlx_instance_t	*get_object(t_map *map, int y, int x)
 	int	inst;
 
 	image = map->grid[y][x].obj_img;
-	if (image == 0)
-		return (0);
+	// if (image == 0)
+	// 	return (0);
 	inst = map->grid[y][x].obj_inst;
 	return (&image->instances[inst]);
 }

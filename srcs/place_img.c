@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:44:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 16:13:48 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:13:29 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 	}
 	if (pos->obj_inst == -1)
 		return (0);
-	mlx_set_instance_depth(get_tile(map, pos->x, pos->y), 5);
+	mlx_set_instance_depth(get_object(map, pos->x, pos->y), 1);
 	return (1);
 }
 
@@ -59,7 +59,7 @@ int	place_player(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 	map->player.img = images->player_img;
 	if (map->player.inst == -1)
 		return (0);
-	mlx_set_instance_depth(get_tile(map, pos->x, pos->y), 10);
+	mlx_set_instance_depth(get_tile(map, pos->x, pos->y), 2);
 	return (1);
 }
 

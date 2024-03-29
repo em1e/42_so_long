@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:45:14 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 09:47:27 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:24:32 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ int	resize_images(t_images images, int new_size)
 		return (0);
 	if (mlx_resize_image(images.coin_img, new_size, new_size) == 0)
 		return (0);
+	// if (mlx_resize_image(images.count_img, new_size, new_size) == 0)
+	// 	return (0);
 	return (1);
 }

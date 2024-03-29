@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 11:36:09 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 07:22:26 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:00:22 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@
 #  define PLAYER_TEXTURE "./textures/still_animation/duck_still1.png"
 #  define EXIT_TEXTURE "./textures/door_animation/door_closed.png"
 #  define COIN_TEXTURE "./textures/collectable/coin.png"
+
+#  define UP 1
+#  define DOWN 2
+#  define RIGHT 3
+#  define LEFT 4
+
 
 typedef struct s_textures
 {
@@ -72,6 +78,7 @@ typedef struct s_map
 	mlx_t			*mlx;
 	t_player	player;
 	t_images	images;
+	int				direction;
 	int				scale[2];
 	int				collectables;
 	int				moves;
@@ -130,6 +137,9 @@ t_map	*parse_map(char *file);
 // move_player.c
 void	collect(t_map *map, int y, int x);
 void	move_player_texture(t_map *map, int up, int right);
-void	move_player(t_map *map, int up, int right);
+int	move_direction(int direction);
+void move_player(t_map *map, int direction);
+t_grid move_vertically(t_map *map, int move_direc);
+t_grid move_horizontally(t_map *map, int move_direc);
 
 #endif

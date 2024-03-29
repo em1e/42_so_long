@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:11:53 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 16:29:19 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:30:58 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int init_images(mlx_t *mlx, t_map *map)
 	map->images.wall_img = load_img(mlx, WALL_TEXTURE);
 	map->images.exit_img = load_img(mlx, EXIT_TEXTURE);
 	map->images.coin_img = load_img(mlx, COIN_TEXTURE);
-	if (!map->images.player_img || !map->images.floor_img 
+	if (!map->images.floor_img 
 	|| !map->images.wall_img || !map->images.exit_img || !map->images.coin_img)
 		return (0);
 	if (resize_images(map->images, map->tile_size) == 0)

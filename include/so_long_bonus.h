@@ -53,6 +53,7 @@ typedef struct s_images
 	mlx_image_t	*wall_img;
 	mlx_image_t	*exit_img;
 	mlx_image_t	*coin_img;
+	mlx_image_t	*count_img;
 }	t_images;
 
 typedef struct s_grid
@@ -104,6 +105,7 @@ typedef struct s_map
 int	error(char *msg);
 int	game_error(mlx_t *mlx, t_map *map, char *msg, int won);
 int	free_grid(t_grid **grid);
+int	free_map(t_map *map);
 
 // game.c
 void	window_input_hook(void *param);
@@ -165,5 +167,11 @@ int	resize_player_animation(mlx_image_t *images[], int new_size);
 void	animate_player(t_map *map);
 void	anim_update_hook(void *param);
 void	animate_coin(t_map *map);
+
+// end_game.c
+
+// hooks.c
+void key_hooks(mlx_key_data_t keydata, void *param);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:44:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 16:17:47 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:32:53 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 {
 	if (pos->tile != 'E' && pos->tile != 'C')
 		return (1);
-	if (pos->tile == 'E')
-	{
-		pos->obj_inst = mlx_image_to_window(mlx, images->exit_img, pos->y * map->tile_size, pos->x * map->tile_size);
-		pos->obj_img = images->exit_img;
-	}
-	else if (pos->tile == 'C')
+	if (pos->tile == 'C')
 	{
 		pos->obj_inst = mlx_image_to_window(mlx, images->coin_img, pos->y * map->tile_size, pos->x * map->tile_size);
 		pos->obj_img = images->coin_img;
+	}
+	else if (pos->tile == 'E')
+	{
+		pos->obj_inst = mlx_image_to_window(mlx, images->exit_img, pos->y * map->tile_size, pos->x * map->tile_size);
+		pos->obj_img = images->exit_img;
 	}
 	if (pos->obj_inst == -1)
 		return (0);
@@ -54,8 +54,6 @@ int	place_player(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 {
 	if (pos->tile != 'P')
 		return (1);
-	if (mlx)
-		ft_printf("boo");
 	map->player.inst = mlx_image_to_window(mlx, images->player_img, pos->y * map->tile_size, pos->x * map->tile_size);
 	map->player.img = images->player_img;
 	if (map->player.inst == -1)

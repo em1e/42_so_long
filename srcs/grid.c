@@ -6,11 +6,25 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:08:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/27 14:48:08 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:46:02 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	free_grid(t_grid **grid)
+{
+	int	i;
+
+	i = 0;
+	while (grid[i] != 0)
+	{
+		free(grid[i]);
+		i++;
+	}
+	free(grid);
+	return (0);
+}
 
 int	find_path(t_grid **grid, int y, int x)
 {

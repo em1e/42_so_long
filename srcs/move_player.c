@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/26 16:36:40 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:34:32 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,51 @@ void	move_player_texture(t_map *map, int up, int right)
 	get_player(map)->x += right * map->tile_size;
 }
 
-void move_player(t_map *map, int up, int right) 
+int	move_direction(int direction)
+{
+	if (direction == 2 || direction == 4) 
+		return (-1);
+	if (direction == 1 || direction == 3)
+		return (1);
+	return (2);
+}
+
+void move_player(t_map *map, int direction) 
+{
+	t_grid	target_pos;
+	int			move_direc;
+	
+	if (direction == UP || direction == DOWN)
+	{
+		move_direc = move_direction(direction);
+		target_pos = move_vertically(map, move_direc);
+	}
+	if (direction == RIGHT || direction == LEFT)
+	{
+		move_direc = move_direction(direction);
+		target_pos = move_horizontally(map, move_direc);
+	}
+	map->moves++;
+	if (map->won == 0)
+		ft_printf("Moves: %d\n", map->moves);
+	if (direction == UP || direction == DOWN)
+		move_player_texture(map, move_direc, 0); // rewrite
+	if (direction == RIGHT || direction == LEFT)
+		move_player_texture(map, 0, move_direc); // rewrite
+	if (target_pos.tile == 'E' && map->collectables == 0)
+	{
+		map->won = 1;
+		end_game(map, map->mlx, map->won);
+	}
+}
+
+t_grid move_vertically(t_map *map, int move_direc)
 {
 	t_grid			target_pos;
 	t_player		*player;
 	
 	player = &map->player;
-	ft_printf("at->y: %d\n", player->y); // remove
-	ft_printf("at->x: %d\n", player->x); // remove
-	target_pos = map->grid[player->y - up][player->x + right];
+	target_pos = map->grid[player->y - move_direc][player->x];
 	ft_printf("coins to collect: %d\n", map->collectables);
 	if (target_pos.tile == '1' || (target_pos.tile == 'E' && map->collectables != 0))
 	{
@@ -48,20 +84,27 @@ void move_player(t_map *map, int up, int right)
 		return ;
 	}
 	if (target_pos.tile == 'C')
-		collect(map, player->y - up, player->x + right);
+		collect(map, player->y - move_direc, player->x);
 	map->grid[player->y][player->x].tile = '0';
-	player->y -= up;
-	player->x += right;
+	player->y -= move_direc;
 	map->grid[player->y][player->x].tile = 'P';
-	ft_printf("moved_to->y: %d\n", player->y); // remove
-	ft_printf("moved_to->x: %d\n", player->x); // remove
-	map->moves++;
-	if (map->won == 0)
-		ft_printf("Moves: %d\n", map->moves);
-	move_player_texture(map, up, right);
-	if (target_pos.tile == 'E' && map->collectables == 0)
-	{
-		map->won = 1;
-		end_game(map, map->mlx, map->won);
-	}
+	return (target_pos);
+}
+
+t_grid	move_horizontally(t_map *map, int move_direc)
+{
+	t_grid			target_pos;
+	t_player		*player;
+
+	player = &map->player;
+	target_pos = map->grid[player->y][player->x + move_direc];
+	ft_printf("coins to collect: %d\n", map->collectables);
+	if (target_pos.tile == '1' || (target_pos.tile == 'E' && map->collectables != 0))
+		return (target_pos);
+	if (target_pos.tile == 'C')
+		collect(map, player->y, player->x + move_direc);
+	map->grid[player->y][player->x].tile = '0';
+	player->x += move_direc;
+	map->grid[player->y][player->x].tile = 'P';
+	return (target_pos);
 }
