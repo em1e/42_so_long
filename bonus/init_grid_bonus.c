@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:08:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 04:54:25 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:49:07 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	fill_grid(t_grid **grid, int scale[], int map_fd)
 		line = get_next_line(map_fd);
 		if (line == 0)
 			return (0);
+		ft_printf("meep\n");
 		j = 0;
 		grid[i] = ft_calloc(scale[0] + 1, sizeof(t_grid));
 		if (grid[i] == 0)
@@ -83,15 +84,10 @@ t_grid	**init_grid(char *file, int scale[], t_player *player)
 	t_grid		**grid;
 	int			map_fd;
 
-	map_fd = open(file, O_RDONLY);
-	if (map_fd == -1)
-		return (0);
 	grid = ft_calloc(sizeof(t_grid *), scale[1] + 1);
-	if (grid == 0)
-	{
-		close(map_fd);
+	map_fd = open(file, O_RDONLY);
+	if (grid == 0 || map_fd == -1)
 		return (0);
-	}
 	if (!fill_grid(grid, scale, map_fd) || !check_grid(grid, scale, player))
 	{
 		free_grid(grid);

@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:46:13 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/26 12:30:12 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:48:47 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_line(char *line, int pce[], int width)
 	while (line[i] != '\n' && line[i] != '\0')
 	{
 		if ((i == 0 || i == width - 1) && line[i] != '1')
-			return (0);
+			return (error("map is not surrounded by walls"));
 		if (!ft_strchr("01PCE", line[i]))
 			return (error("map contains an invalid character"));
 		if (line[i] == 'P' && pce[0] != 0)

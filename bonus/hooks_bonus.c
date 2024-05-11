@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:51:17 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/25 18:25:13 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:14:32 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,25 @@ void	key_hooks(mlx_key_data_t keydata, void *param)
 	t_map	*map;
 
 	map = param;
-	if ((keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP)
-		&& keydata.action == MLX_PRESS)
+	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
 	{
 		move_player(map, 1, 0);
+		is_enemy(map);
 	}
-	if ((keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN)
-		&& keydata.action == MLX_PRESS)
+	if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
 	{
 		move_player(map, -1, 0);
+		is_enemy(map);
 	}
-	if ((keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT)
-		&& keydata.action == MLX_PRESS)
+	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
 	{
 		move_player(map, 0, 1);
+		is_enemy(map);
 	}
-	if ((keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT)
-		&& keydata.action == MLX_PRESS)
+	if (keydata.key == MLX_KEY_LEFT	&& keydata.action == MLX_PRESS)
 	{
 		move_player(map, 0, -1);
+		is_enemy(map);
 	}
 }
 

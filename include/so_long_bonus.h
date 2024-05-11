@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 04:03:48 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 04:35:11 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:37:04 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@
 # define DOOR_CLOSED "./textures/door_animation/door_closed.png"
 # define DOOR_OPEN "./textures/door_animation/door_open.png"
 
-# define PLAYER_IDLE1 "./textures/pirate/idle1.png"
-# define PLAYER_IDLE2 "./textures/pirate/idle2.png"
-# define PLAYER_IDLE3 "./textures/pirate/idle3.png"
-# define PLAYER_IDLE4 "./textures/pirate/idle4.png"
-# define PLAYER_IDLE5 "./textures/pirate/idle5.png"
+# define PLAYER_IDLE1 "./textures/pirate/Idle1.png"
+# define PLAYER_IDLE2 "./textures/pirate/Idle2.png"
+# define PLAYER_IDLE3 "./textures/pirate/Idle3.png"
+# define PLAYER_IDLE4 "./textures/pirate/Idle4.png"
+# define PLAYER_IDLE5 "./textures/pirate/Idle5.png"
+
+# define ENEMY_1 "./textures/enemy/asleep.png"
+# define ENEMY_2 "./textures/enemy/awake.png"
 
 # define COIN "./textures/collectable/coin.png"
 # define ITEM_1 "./textures/collectable/item1.png"
@@ -51,15 +54,19 @@
 typedef struct s_textures
 {
 	mlx_texture_t	*player_tx;
+	mlx_texture_t	*e_asleep_tx;
+	mlx_texture_t	*e_awake_tx;
 	mlx_texture_t	*floor_tx;
 	mlx_texture_t	*wall_tx;
-	mlx_texture_t	*exit_tx;
+	mlx_texture_t	*door_tx;
 	mlx_texture_t	*coin_tx;
 }	t_textures;
 
 typedef struct s_images
 {
 	mlx_image_t	*player_im;
+	mlx_image_t	*e_asleep_im;
+	mlx_image_t	*e_awake_im;
 	mlx_image_t	*floor_im;
 	mlx_image_t	*wall_im;
 	mlx_image_t	*coin_im;
@@ -88,11 +95,22 @@ typedef struct s_player
 	int					inst;
 }	t_player;
 
+typedef struct s_enemy
+{
+	int					amount;
+	int					x;
+	int					y;
+	int					awake;
+	mlx_image_t			*img;
+	int					inst;
+}	t_enemy;
+
 typedef struct s_map
 {
 	t_grid		**grid;
 	mlx_t		*mlx;
 	t_player	player;
+	t_enemy		enemy;
 	t_images	images;
 	int			exit[2];
 	int			scale[2]; // height 0, width 1
@@ -104,6 +122,7 @@ typedef struct s_map
 	int			player_size[2]; // height 0, width 1
 	int			item_size;
 	int			action; // idle 0, walking 1, opendoor 2
+	int			map_fd;
 	mlx_image_t	*door_open;
 	mlx_image_t	*player_animation[5];
 	mlx_image_t	*move_img;
@@ -125,6 +144,12 @@ int				check_path(t_grid **grid, int scale[], int y, int x);
 // coin_img.c
 char			*find_file(int random);
 mlx_image_t		*change_coin_img(mlx_t *mlx, t_map *map);
+
+// enemy.c
+void			is_enemy(t_map *map);
+void			wake_enemy(t_map *map, int y, int x);
+void			enemy_fall_asleep(t_map *map);
+void			found_enemy(t_map *map, int y, int x);
 
 // error_and_free.c
 int				error(char *msg);
@@ -151,9 +176,9 @@ mlx_image_t		*load_img(mlx_t *mlx, char *file);
 int				init_images(mlx_t *mlx, t_map *map);
 
 // init_map.c
-int				check_line(char *line, int pce[], int width);
-int				check_map_content(int map_fd, int scale[]);
-int				check_map(char *file, int scale[]);
+int				check_line(t_map *map, char *line, int pce[], int width);
+int				check_map_content(t_map *map, int scale[]);
+int				check_map(t_map *map, char *file, int scale[]);
 t_map			*init_map(char *file);
 
 // inst.c

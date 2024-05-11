@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:44:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 04:39:27 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 21:52:02 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	place_tile(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 
 int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 {
-	if (pos->tile != 'E' && pos->tile != 'C')
+	if (pos->tile != 'E' && pos->tile != 'C' && pos->tile != 'D')
 		return (1);
 	if (pos->tile == 'E')
 	{
@@ -50,9 +50,14 @@ int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 		pos->obj_img = images->coin_im;
 		images->coin_im = change_coin_img(mlx, map);
 	}
-	if (pos->obj_inst == -1)
-		return (0);
-	mlx_set_instance_depth(get_object(map, pos->x, pos->y), 5);
+	else if (pos->tile == 'D')
+	{
+		map->enemy.img = images->e_asleep_im;
+		pos->obj_inst = mlx_image_to_window(mlx, map->enemy.img,
+				pos->y * map->tile_size, pos->x * map->tile_size);
+		pos->obj_img = map->enemy.img;
+	}
+	mlx_set_instance_depth(get_object(map, pos->x, pos->y), 1);
 	return (1);
 }
 
@@ -62,11 +67,11 @@ int	place_player(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 		return (1);
 	map->player.img = images->player_im;
 	map->player.inst = mlx_image_to_window(mlx, map->player.img,
-			pos->y * map->tile_size,
-			pos->x * map->tile_size);
+		pos->y * map->tile_size,
+		pos->x * map->tile_size);	
 	if (map->player.inst == -1)
 		return (0);
-	mlx_set_instance_depth(get_player(map), 10);
+	mlx_set_instance_depth(get_player(map), 2);
 	return (1);
 }
 

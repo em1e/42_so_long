@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 11:49:11 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/29 11:51:38 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:12:26 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ int	find_path(t_grid **grid, int y, int x)
 {
 	char	symbol;
 
-	if (grid[y] == 0 || grid[y][x].tile == 0)
-		return (0);
 	symbol = grid[y][x].tile;
-	if (symbol == '1' || symbol == 'X' || symbol == 'Y')
+	if (grid[y] == 0 || symbol == 0
+			|| symbol == '1' || symbol == 'X' || symbol == 'Y')
+		return (0);
+	if (symbol == 'D')
 		return (0);
 	if (symbol == 'P')
 		return (1);
@@ -42,22 +43,22 @@ int	find_path(t_grid **grid, int y, int x)
 
 void	clean_grid(t_grid **grid, int scale[])
 {
-	int	i;
-	int	j;
+	int	y;
+	int	x;
 
-	i = 0;
-	while (i < scale[1])
+	y = 0;
+	while (y < scale[1])
 	{
-		j = 0;
-		while (j < scale[0])
+		x = 0;
+		while (x < scale[0])
 		{
-			if (grid[i][j].tile == 'X')
-				grid[i][j].tile = '0';
-			if (grid[i][j].tile == 'Y')
-				grid[i][j].tile = 'C';
-			j++;
+			if (grid[y][x].tile == 'X')
+				grid[y][x].tile = '0';
+			if (grid[y][x].tile == 'Y')
+				grid[y][x].tile = 'C';
+			x++;
 		}
-		i++;
+		y++;
 	}
 }
 

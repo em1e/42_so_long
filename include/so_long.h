@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 11:36:09 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 04:37:07 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:38:28 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define FLOOR "./textures/floor.png"
 # define WALL "./textures/wall.png"
 # define DOOR "./textures/door_animation/door_open.png"
-# define PLAYER "./textures/pirate/idle1.png"
+# define PLAYER "./textures/pirate/Idle1.png"
 
 # define COIN "./textures/collectable/coin.png"
 # define ITEM_1 "./textures/collectable/item1.png"

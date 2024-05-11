@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:08:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 03:50:32 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:18:40 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_grid	**init_grid(char *file, int scale[], t_player *player)
 	map_fd = open(file, O_RDONLY);
 	if (map_fd == -1)
 		return (0);
-	grid = malloc(sizeof(t_grid *) * scale[1] + 1);
+	grid = ft_calloc(sizeof(t_grid *), (scale[1] + 1));
 	if (grid == 0)
 	{
 		close(map_fd);

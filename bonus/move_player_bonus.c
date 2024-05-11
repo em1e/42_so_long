@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 04:42:44 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 22:31:05 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,9 @@ void	move(t_map *map, int up, int right)
 		map->grid[player->y][player->x].tile = '0';
 	player->y -= up;
 	player->x += right;
+	// add enemy found here
 	if (target_pos.tile == 'E' && map->collectables != 0)
 	{
-		ft_printf("You need to collect all items before exiting!\n");
-		ft_printf("Current items left to collect: %d\n", map->collectables);
 		map->grid[player->y][player->x].tile = 'p';
 		return ;
 	}
@@ -66,6 +65,12 @@ void	move_player(t_map *map, int up, int right)
 		return ;
 	if (target_pos.tile == 'C')
 		collect(map, player->y - up, player->x + right);
+	// if (map->enemy.awake == 1 && target_pos.tile == 'D')
+	if (target_pos.tile == 'D')
+	{
+		ft_printf("You were caught by the enemy!\n");
+		end_game(map, map->mlx, map->won);
+	}
 	move(map, up, right);
 	print_movements(map);
 	move_player_texture(map, up, right);

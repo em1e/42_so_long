@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 04:42:18 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:08:09 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	move(t_map *map, int up, int right)
 	player->x += right;
 	if (target_pos.tile == 'E' && map->collectables != 0)
 	{
-		ft_printf("You need to collect all items before exiting!\n");
-		ft_printf("Current items left to collect: %d\n", map->collectables);
 		map->grid[player->y][player->x].tile = 'p';
 		return ;
 	}

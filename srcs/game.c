@@ -6,11 +6,10 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:37:32 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/25 11:05:57 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:10:18 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <unistd.h>
 #include "so_long.h"
 
 void	end_game(t_map *map, mlx_t *mlx, int won)

@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:11:53 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 03:40:02 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/10 17:37:43 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	init_images(mlx_t *mlx, t_map *map)
 {
 	map->images.random = 1;
 	map->images.player_im = load_img(mlx, PLAYER_IDLE1);
+	map->images.e_asleep_im = load_img(mlx, ENEMY_1);
+	map->images.e_awake_im = load_img(mlx, ENEMY_2);
 	map->images.floor_im = load_img(mlx, FLOOR);
 	map->images.wall_im = load_img(mlx, WALL);
 	map->images.door_closed = load_img(mlx, DOOR_CLOSED);
@@ -36,7 +38,8 @@ int	init_images(mlx_t *mlx, t_map *map)
 	map->images.coin_im = load_img(mlx, COIN);
 	if (!map->images.player_im || !map->images.floor_im
 		|| !map->images.wall_im || !map->images.door_closed
-		|| !map->images.door_open || !map->images.coin_im)
+		|| !map->images.door_open || !map->images.coin_im
+		|| !map->images.e_asleep_im || !map->images.e_awake_im)
 		return (0);
 	if (resize_images(map->images, map) == 0)
 		return (0);
