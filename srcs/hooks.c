@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks_bonus.c                                      :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 10:51:17 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/25 18:25:13 by vkettune         ###   ########.fr       */
+/*   Created: 2024/04/25 10:04:13 by vkettune          #+#    #+#             */
+/*   Updated: 2024/04/25 18:25:00 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_bonus.h"
+#include "so_long.h"
 
 void	window_input_hook(void *param)
 {
@@ -43,20 +43,4 @@ void	key_hooks(mlx_key_data_t keydata, void *param)
 	{
 		move_player(map, 0, -1);
 	}
-}
-
-void	anim_update_hook(void *param)
-{
-	static double		timer;
-	t_map				*map;
-	mlx_t				*mlx;
-
-	map = param;
-	mlx = map->mlx;
-	timer += mlx->delta_time;
-	if (timer < (double) DELAY)
-		return ;
-	timer = 0;
-	map = param;
-	animate_player(map);
 }

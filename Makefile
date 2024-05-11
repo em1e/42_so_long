@@ -6,7 +6,7 @@
 #    By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 11:14:33 by vkettune          #+#    #+#              #
-#    Updated: 2024/03/28 15:41:49 by vkettune         ###   ########.fr        #
+#    Updated: 2024/04/27 04:21:20 by vkettune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CYAN = \033[0;96m
 WHITE = \033[0;97m
 
 NAME = so_long
-CFLAGS = -Wall -Wextra -Werror $(HEADERS)
+CFLAGS = -Wall -Wextra -Werror -g $(HEADERS)
 HEADERS = -I ./include -I ./libs/MLX42/include/MLX42
 
 LIBFT = ./libs/libft/libft.a
@@ -45,13 +45,14 @@ SRCS_DIR = srcs/
 BONUS_DIR = bonus/
 OBJS_DIR = objs/
 
-FILES = errors.c game.c grid.c \
- main.c map.c get.c init_images.c move_player.c \
- place_img.c resize.c
-BONUS_FILES = errors_and_free_bonus.c game_bonus.c grid_bonus.c \
- main_bonus.c map_bonus.c get_bonus.c init_images_bonus.c move_player_bonus.c \
- place_img_bonus.c resize_bonus.c animations_init_bonus.c animations_bonus.c \
- end_game_bonus.c hooks_bonus.c
+FILES = errors_and_free.c game.c init_grid.c \
+ main.c init_map.c inst.c init_images.c move_player.c \
+ place_img.c resize.c check_path.c hooks.c coin_img.c
+BONUS_FILES = animate_player_bonus.c animate_door_bonus.c \
+	check_path_bonus.c errors_and_free_bonus.c game_bonus.c hooks_bonus.c \
+	init_grid_bonus.c init_images_bonus.c init_map_bonus.c \
+	inst_bonus.c main_bonus.c move_player_bonus.c place_img_bonus.c \
+	place_moves_bonus.c resize_bonus.c coin_img_bonus.c
 
 SOURCES = $(addprefix $(SRCS_DIR), $(FILES))
 OBJECTS = $(addprefix $(OBJS_DIR), $(FILES:.c=.o))
@@ -87,22 +88,14 @@ re: fclean all
 	@echo "$(DARK_MAGENTA)Sucessfully cleaned and rebuilt everything\n$(X)"
 
 # BONUS
-bonus: bonus_clean $(BONUS_OBJECTS)
+bonus: fclean folders libft mlx42 $(BONUS_OBJECTS)
 	@cc $(BONUS_OBJECTS) $(LIBS) $(HEADERS) -o $(NAME)
 	@echo "$(DARK_MAGENTA)- - ✨✨✨✨ Bonus compiled! ✨✨✨✨ - -$(X)"
+	@echo "$(GREEN)- - - - - - - - - - - - - - - - - - - - - - -$(X)"
+	@echo "$(GREEN)Run the program with ./$(NAME)$(X)"
 
 $(OBJS_DIR)%.o: $(BONUS_DIR)%.c
 	@cc $(CFLAGS) -c $< -o $@ && echo "$(DARK_GRAY)Compiled: $@ $(X)"
-
-bonus_clean:
-	@rm -rf $(OBJS_DIR)
-	@rm -f $(NAME)
-	@mkdir -p $(OBJS_DIR)
-
-re_bonus: fclean folders libft mlx42 bonus
-	@echo "$(DARK_MAGENTA)Sucessfully cleaned and rebuilt bonus$(X)"
-	@echo "$(GREEN)- - - - - - - - - - - - - - - - - - - - - - -$(X)"
-	@echo "$(GREEN)Run the program with ./$(NAME)$(X)"
 
 # OTHER RULES
 folders:

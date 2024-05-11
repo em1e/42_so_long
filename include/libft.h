@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:03:03 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/22 13:08:51 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/04/27 04:28:53 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <string.h>
 # include <stdarg.h>
 # include <stdlib.h>
-
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42

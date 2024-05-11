@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 11:36:09 by vkettune          #+#    #+#             */
-/*   Updated: 2024/03/28 14:00:22 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/04/27 04:37:07 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,43 @@
 # include "libft.h"
 # include "MLX42.h"
 
-# ifndef TILE_SIZE
-#  define TILE_SIZE 32
-# endif
+# define TILE_SIZE 50
 
-#  define FLOOR_TEXTURE "./textures/floor/floor1.png"
-#  define WALL_TEXTURE "./textures/wall/wall.png"
-#  define PLAYER_TEXTURE "./textures/still_animation/duck_still1.png"
-#  define EXIT_TEXTURE "./textures/door_animation/door_closed.png"
-#  define COIN_TEXTURE "./textures/collectable/coin.png"
+# define FLOOR "./textures/floor.png"
+# define WALL "./textures/wall.png"
+# define DOOR "./textures/door_animation/door_open.png"
+# define PLAYER "./textures/pirate/idle1.png"
 
-#  define UP 1
-#  define DOWN 2
-#  define RIGHT 3
-#  define LEFT 4
-
+# define COIN "./textures/collectable/coin.png"
+# define ITEM_1 "./textures/collectable/item1.png"
+# define ITEM_2 "./textures/collectable/item2.png"
+# define ITEM_3 "./textures/collectable/item3.png"
+# define ITEM_4 "./textures/collectable/item4.png"
+# define ITEM_5 "./textures/collectable/item5.png"
+# define ITEM_6 "./textures/collectable/item6.png"
+# define ITEM_7 "./textures/collectable/item7.png"
+# define ITEM_8 "./textures/collectable/item8.png"
+# define ITEM_9 "./textures/collectable/item9.png"
+# define ITEM_10 "./textures/collectable/item10.png"
+# define ITEM_11 "./textures/collectable/item11.png"
 
 typedef struct s_textures
 {
-	mlx_texture_t	*player_txr;
-	mlx_texture_t	*floor_txr;
-	mlx_texture_t	*wall_txr;
-	mlx_texture_t	*exit_txr;
-	mlx_texture_t	*collectable_txr;
+	mlx_texture_t	*player_tx;
+	mlx_texture_t	*floor_tx;
+	mlx_texture_t	*wall_tx;
+	mlx_texture_t	*exit_tx;
+	mlx_texture_t	*collectable_tx;
 }	t_textures;
 
 typedef struct s_images
 {
-	mlx_image_t	*player_img;
-	mlx_image_t	*floor_img;
-	mlx_image_t	*wall_img;
-	mlx_image_t	*exit_img;
-	mlx_image_t	*coin_img;
+	mlx_image_t	*player_im;
+	mlx_image_t	*floor_im;
+	mlx_image_t	*wall_im;
+	mlx_image_t	*exit_im;
+	mlx_image_t	*coin_im;
+	int			random;
 }	t_images;
 
 typedef struct s_grid
@@ -58,8 +63,8 @@ typedef struct s_grid
 	int					x;
 	int					y;
 	char				tile;
-	mlx_image_t	*tile_img;
-	mlx_image_t	*obj_img;
+	mlx_image_t			*tile_img;
+	mlx_image_t			*obj_img;
 	int					tile_inst;
 	int					obj_inst;
 }	t_grid;
@@ -68,78 +73,89 @@ typedef struct s_player
 {
 	int					x;
 	int					y;
-	mlx_image_t	*img;
+	mlx_image_t			*img;
 	int					inst;
 }	t_player;
 
 typedef struct s_map
 {
 	t_grid		**grid;
-	mlx_t			*mlx;
+	mlx_t		*mlx;
 	t_player	player;
 	t_images	images;
-	int				direction;
-	int				scale[2];
-	int				collectables;
-	int				moves;
-	int				won;
-	int				tile_size;
+	int			scale[2];
+	int			collectables;
+	int			moves;
+	int			won;
+	int			tile_size;
+	int			player_size[2];
+	int			item_size;
 }	t_map;
 
+// check_path.c
+int				find_path(t_grid **grid, int y, int x);
+void			clean_grid(t_grid **grid, int scale[]);
+int				check_path(t_grid **grid, int scale[], int y, int x);
+
+// coin_img.c
+char			*find_file(int random);
+mlx_image_t		*change_coin_img(mlx_t *mlx, t_map *map);
+
 // error_and_free.c
-int	error(char *msg);
-int	game_error(mlx_t *mlx, t_map *map, char *msg, int won);
-int	free_grid(t_grid **grid);
+int				error(char *msg);
+int				game_error(mlx_t *mlx, t_map *map, char *msg, int won);
+int				free_grid(t_grid **grid);
 
 // game.c
-void	window_input_hook(void *param);
-void	player_key_hooks(mlx_key_data_t keydata, void *param);
-void	end_game(t_map *map, mlx_t *mlx, int won);
-int		start_game(t_map *map);
+void			end_game(t_map *map, mlx_t *mlx, int won);
+int				start_game(t_map *map);
 
-// get.c
+// hooks.c
+void			window_input_hook(void *param);
+void			key_hooks(mlx_key_data_t keydata, void *param);
+
+// init_grid.c
+int				check_walls(t_grid **grid, int scale[], int y, int x);
+int				check_grid(t_grid **grid, int scale[], t_player *player);
+int				fill_grid(t_grid **grid, int scale[], int map_fd);
+t_grid			**init_grid(char *file, int scale[], t_player *player);
+
+// init_images.c
+mlx_image_t		*load_img(mlx_t *mlx, char *file);
+int				init_images(mlx_t *mlx, t_map *map);
+
+// init_map.c
+int				check_line(char *line, int pce[], int width);
+int				check_map_content(int map_fd, int scale[]);
+int				check_map(char *file, int scale[]);
+t_map			*init_map(char *file);
+
+// inst.c
 mlx_instance_t	*get_tile(t_map *map, int y, int x);
 mlx_instance_t	*get_object(t_map *map, int y, int x);
 mlx_instance_t	*get_player(t_map *map);
 
-// grid.c
-int	find_path(t_grid **grid, int y, int x);
-void	clean_grid(t_grid **grid, int scale[]);
-int	check_path(t_grid **grid, int scale[], int y, int x);
-int	check_grid(t_grid **grid, int scale[], t_player *player);
-int	fill_grid(t_grid **grid, int scale[], int map_fd);
-
-// place_img.c
-int	place_tile(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images);
-int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images);
-int	place_player(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images);
-int	place_images(mlx_t *mlx, t_map *map, t_images *images);
-
-// resize.c
-void	window_size_limit(mlx_t *mlx, t_map *map);
-void	resize_tiles(int width, int height, void *param);
-int	resize_images(t_images images, int new_size);
-
-// init_images.c
-mlx_image_t	*load_img(mlx_t *mlx, char *file);
-int	init_images(mlx_t *mlx, t_map *map);
-
 // main.c
-int	main(int argc, char **argv);
-
-// map.c
-int	check_line(char *line, int pce[], int width);
-int	check_map_content(int map_fd, int scale[]);
-int	check_map(char *file, int scale[]);
-t_grid	**init_grid(char *file, int scale[], t_player *player);
-t_map	*parse_map(char *file);
+int				main(int argc, char **argv);
 
 // move_player.c
-void	collect(t_map *map, int y, int x);
-void	move_player_texture(t_map *map, int up, int right);
-int	move_direction(int direction);
-void move_player(t_map *map, int direction);
-t_grid move_vertically(t_map *map, int move_direc);
-t_grid move_horizontally(t_map *map, int move_direc);
+void			collect(t_map *map, int y, int x);
+void			move_player_texture(t_map *map, int up, int right);
+void			move(t_map *map, int up, int right);
+void			move_player(t_map *map, int up, int right);
+
+// place_img.c
+int				place_tile(mlx_t *mlx, t_map *map, t_grid *pos,
+					t_images *images);
+int				place_object(mlx_t *mlx, t_map *map, t_grid *pos,
+					t_images *images);
+int				place_player(mlx_t *mlx, t_map *map, t_grid *pos,
+					t_images *images);
+int				place_images(mlx_t *mlx, t_map *map, t_images *images);
+
+// resize.c
+void			window_size_limit(mlx_t *mlx, t_map *map);
+void			resize_tiles(int width, int height, t_map *map);
+int				resize_images(t_images images, t_map *map);
 
 #endif
