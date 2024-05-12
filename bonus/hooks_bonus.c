@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 10:51:17 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/10 17:14:32 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/12 08:57:37 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,35 @@ void	window_input_hook(void *param)
 void	key_hooks(mlx_key_data_t keydata, void *param)
 {
 	t_map	*map;
+	int		key;
 
 	map = param;
+	key = keydata.key;
 	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
 	{
 		move_player(map, 1, 0);
-		is_enemy(map);
+		is_enemy(key, map, 0);
 	}
 	if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
 	{
 		move_player(map, -1, 0);
-		is_enemy(map);
+		is_enemy(key, map, 0);
 	}
 	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
 	{
 		move_player(map, 0, 1);
-		is_enemy(map);
+		is_enemy(key, map, 0);
 	}
 	if (keydata.key == MLX_KEY_LEFT	&& keydata.action == MLX_PRESS)
 	{
 		move_player(map, 0, -1);
-		is_enemy(map);
+		is_enemy(key, map, 0);
 	}
+	if (keydata.key == MLX_KEY_SPACE && map->enemy.awake == 1)
+	{
+		is_enemy(key, map, 1);
+	}
+	// ft_printf("key: %d\n", key);
 }
 
 void	anim_update_hook(void *param)

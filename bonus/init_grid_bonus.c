@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:08:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/10 19:49:07 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/12 08:10:38 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_walls(t_grid **grid, int scale[], int y, int x)
 	return (1);
 }
 
-int	check_grid(t_grid **grid, int scale[], t_player *player)
+int	check_grid(t_map *map, t_grid **grid, int scale[], t_player *player)
 {
 	int		x;
 	int		y;
@@ -42,6 +42,8 @@ int	check_grid(t_grid **grid, int scale[], t_player *player)
 				player->x = x;
 				player->y = y;
 			}
+			if (grid[y][x].tile == 'D')
+				found_enemy(map, y, x);
 			x++;
 		}
 		y++;
@@ -61,7 +63,6 @@ int	fill_grid(t_grid **grid, int scale[], int map_fd)
 		line = get_next_line(map_fd);
 		if (line == 0)
 			return (0);
-		ft_printf("meep\n");
 		j = 0;
 		grid[i] = ft_calloc(scale[0] + 1, sizeof(t_grid));
 		if (grid[i] == 0)
@@ -79,7 +80,7 @@ int	fill_grid(t_grid **grid, int scale[], int map_fd)
 	return (1);
 }
 
-t_grid	**init_grid(char *file, int scale[], t_player *player)
+t_grid	**init_grid(t_map *map, char *file, int scale[], t_player *player)
 {
 	t_grid		**grid;
 	int			map_fd;
@@ -88,7 +89,7 @@ t_grid	**init_grid(char *file, int scale[], t_player *player)
 	map_fd = open(file, O_RDONLY);
 	if (grid == 0 || map_fd == -1)
 		return (0);
-	if (!fill_grid(grid, scale, map_fd) || !check_grid(grid, scale, player))
+	if (!fill_grid(grid, scale, map_fd) || !check_grid(map, grid, scale, player))
 	{
 		free_grid(grid);
 		close(map_fd);

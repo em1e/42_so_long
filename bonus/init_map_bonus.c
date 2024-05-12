@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:46:13 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/10 22:31:52 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/12 09:11:41 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	check_line(t_map *map, char *line, int pced[], int width)
 	i = 0;
 	while (line[i] != '\n' && line[i] != '\0')
 	{
+		ft_printf("line: %s\n", line);
 		if (!check(line, i, pced, width))
 			return (0);
 		if (line[i] == 'P')
@@ -44,7 +45,6 @@ int	check_line(t_map *map, char *line, int pced[], int width)
 		{
 			pced[3]++;
 			map->enemy.amount++;
-			ft_printf("enemy locationnn %d, %d\n", map->enemy.y, map->enemy.x);
 		}
 		i++;
 	}
@@ -117,13 +117,12 @@ t_map	*init_map(char *file)
 		free(map);
 		return (0);
 	}
-	map->grid = init_grid(file, map->scale, &map->player);
+	map->grid = init_grid(map, file, map->scale, &map->player);
 	if (map->grid == 0)
 	{
 		free(map);
 		return (0);
 	}
-	ft_printf("enemy locationnn %d, %d\n", map->enemy.y, map->enemy.x);
 	find_door(map, map->scale, map->exit);
 	close(map->map_fd);
 	map->tile_size = TILE_SIZE;

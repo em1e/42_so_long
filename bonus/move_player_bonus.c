@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/10 22:31:05 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/12 10:37:58 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	move(t_map *map, int up, int right)
 		map->grid[player->y][player->x].tile = '0';
 	player->y -= up;
 	player->x += right;
-	// add enemy found here
 	if (target_pos.tile == 'E' && map->collectables != 0)
 	{
 		map->grid[player->y][player->x].tile = 'p';
@@ -61,12 +60,12 @@ void	move_player(t_map *map, int up, int right)
 
 	player = &map->player;
 	target_pos = map->grid[player->y - up][player->x + right];
+	// ft_printf("target tile: %c\n", target_pos.tile);
 	if (target_pos.tile == '1')
 		return ;
 	if (target_pos.tile == 'C')
 		collect(map, player->y - up, player->x + right);
-	// if (map->enemy.awake == 1 && target_pos.tile == 'D')
-	if (target_pos.tile == 'D')
+	if (target_pos.tile == 'D' && map->enemy.awake == 1)
 	{
 		ft_printf("You were caught by the enemy!\n");
 		end_game(map, map->mlx, map->won);

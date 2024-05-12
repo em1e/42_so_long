@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 04:03:48 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/10 20:37:04 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/12 08:48:44 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,11 @@ char			*find_file(int random);
 mlx_image_t		*change_coin_img(mlx_t *mlx, t_map *map);
 
 // enemy.c
-void			is_enemy(t_map *map);
+void			is_enemy(int keydata, t_map *map, int kill);
 void			wake_enemy(t_map *map, int y, int x);
 void			enemy_fall_asleep(t_map *map);
 void			found_enemy(t_map *map, int y, int x);
+void			kill_enemy(t_map *map, int y, int x);
 
 // error_and_free.c
 int				error(char *msg);
@@ -167,9 +168,9 @@ void			anim_update_hook(void *param);
 
 // init_grid.c
 int				check_walls(t_grid **grid, int scale[], int y, int x);
-int				check_grid(t_grid **grid, int scale[], t_player *player);
+int				check_grid(t_map *map, t_grid **grid, int scale[], t_player *player);
 int				fill_grid(t_grid **grid, int scale[], int map_fd);
-t_grid			**init_grid(char *file, int scale[], t_player *player);
+t_grid			**init_grid(t_map *map, char *file, int scale[], t_player *player);
 
 // init_images.c
 mlx_image_t		*load_img(mlx_t *mlx, char *file);
