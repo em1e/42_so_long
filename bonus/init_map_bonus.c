@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:46:13 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/12 09:11:41 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/16 09:21:32 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	check_line(t_map *map, char *line, int pced[], int width)
 	i = 0;
 	while (line[i] != '\n' && line[i] != '\0')
 	{
-		ft_printf("line: %s\n", line);
 		if (!check(line, i, pced, width))
 			return (0);
 		if (line[i] == 'P')

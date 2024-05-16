@@ -6,13 +6,13 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:14:50 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/12 10:45:10 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:19:57 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-void	wake_enemy(t_map *map, int y, int x)
+void	wake_enemy(t_map *map, int x, int y)
 {
 	t_enemy	*enemy;
 	mlx_image_t	*awake_img;
@@ -25,15 +25,16 @@ void	wake_enemy(t_map *map, int y, int x)
 	map->enemy.x = map->player.x + x;
 	awake_img = map->images.e_awake_im;
 	img = map->enemy.img;
-	// ft_printf("AA enemy y: %d, x: %d\n", enemy->y, enemy->x);
+	ft_printf("AA enemy y: %d, x: %d\n", enemy->y, enemy->x);
 	pos = &map->grid[enemy->y][enemy->x];
+	ft_printf("AA enemy tile: %c\n", pos->tile);
 	tmp = awake_img;
 	if (enemy->awake == 1)
 		return ;
 	ft_memcpy(img->pixels, awake_img->pixels,
 		img->width * img->height * sizeof(int32_t));
 	enemy->awake = 1;
-	ft_printf("You woke the enemy!\n");
+	ft_printf("You woke the enemy!\n"); //remove
 }
 
 void	enemy_fall_asleep(t_map *map)
@@ -47,15 +48,16 @@ void	enemy_fall_asleep(t_map *map)
 	enemy = &map->enemy;
 	asleep_img = map->images.e_asleep_im;
 	img = map->enemy.img;
-	// ft_printf("BB enemy y: %d, x: %d\n", enemy->y, enemy->x);
+	ft_printf("BB enemy y: %d, x: %d\n", enemy->y, enemy->x); //remove
 	pos = &map->grid[enemy->y][enemy->x];
+	ft_printf("BB enemy tile: %c\n", pos->tile); //remove
 	tmp = asleep_img;
 	if (enemy->awake == 0)
 		return ;
 	ft_memcpy(img->pixels, asleep_img->pixels,
 		img->width * img->height * sizeof(int32_t));
 	enemy->awake = 0;
-	ft_printf("The enemy fell asleep!\n");
+	ft_printf("The enemy fell asleep!\n"); //remove
 }
 
 void	is_enemy(int keydata, t_map *map, int kill)
@@ -65,23 +67,23 @@ void	is_enemy(int keydata, t_map *map, int kill)
 
 	player = &map->player;
 	enemy = &map->enemy;
-	// ft_printf("Is enemy close?\n");
-	if ((player->y + 1) == enemy->y && player->x == enemy->x
-		&& !kill)
+	ft_printf("Is enemy close?\n"); //remove
+	ft_printf("enemy at (y, x): %d, %d\n", enemy->y, enemy->x); //remove
+	if (map->grid[player->y + 1][player->x].tile == 'D' && !kill)
 		wake_enemy(map, 0, 1);
-	else if ((player->y - 1) == enemy->y && player->x == enemy->x
-		&& !kill)
+	else if (map->grid[player->y - 1][player->x].tile == 'D' && !kill)
 		wake_enemy(map, 0, -1);
-	else if (player->y == enemy->y && (player->x + 1) == enemy->x
-		&& !kill)
+	else if (map->grid[player->y][player->x + 1].tile == 'D' && !kill)
 		wake_enemy(map, 1, 0);
-	else if (player->y == enemy->y && (player->x - 1) == enemy->x
-		&& !kill)
+	else if (map->grid[player->y][player->x - 1].tile == 'D' && !kill)
 		wake_enemy(map, -1, 0);
-	else if (enemy->awake == 1 && keydata != MLX_KEY_SPACE)
+	else if (enemy->awake == 1 && !kill)
 		enemy_fall_asleep(map);
 	if (enemy->awake == 1 && keydata == MLX_KEY_SPACE && kill)
+	{
 		kill_enemy(map, enemy->y, enemy->x);
+		ft_printf("pos (x, y): %d, %d\n", enemy->x, enemy->y);	
+	}
 }
 
 void	kill_enemy(t_map *map, int y, int x)
@@ -91,18 +93,26 @@ void	kill_enemy(t_map *map, int y, int x)
 
 	enemy = &map->enemy;
 	pos = &map->grid[y][x];
-	ft_printf("You killed an enemy near you!\n");
+	ft_printf("KK enemy y: %d, x: %d\n", y, x);
+	ft_printf("KK enemy tile: %c\n", map->grid[y][x].tile);
 	if (map->grid[y][x].tile == 'D')
 	{
+		ft_printf("placing floor tile\n");
 		pos->tile_inst = mlx_image_to_window(map->mlx, map->images.floor_im,
 			pos->y * map->tile_size, pos->x * map->tile_size);
 		pos->tile_img = map->images.floor_im;
+		if (pos->tile_inst == -1)
+			ft_printf("Error: could not place floor tile\n");
+		mlx_set_instance_depth(get_tile(map, pos->x, pos->y), 3);
 		map->grid[y][x].tile = '0';	
 	}
+	ft_printf("You killed an enemy near you!\n");
+	ft_printf("Enemies left: %d\n", map->enemy.amount - 1);
 	enemy->y = 0;
 	enemy->x = 0;
 	enemy->awake = 0;
 	map->enemy.amount--;
+	// ft_printf("KKK enemy tile: %c\n", map->grid[2][1].tile);
 }
 
 void	found_enemy(t_map *map, int y, int x)
@@ -110,6 +120,8 @@ void	found_enemy(t_map *map, int y, int x)
 	t_enemy	*enemy;
 
 	enemy = &map->enemy;
+	ft_printf("x: %d, y:%d\n", x, y);
 	enemy->y = y;
 	enemy->x = x;
+	ft_printf("x: %d, y:%d\n", enemy->x, enemy->y);
 }

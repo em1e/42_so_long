@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/12 10:37:58 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:12:17 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	move_player(t_map *map, int up, int right)
 
 	player = &map->player;
 	target_pos = map->grid[player->y - up][player->x + right];
-	// ft_printf("target tile: %c\n", target_pos.tile);
 	if (target_pos.tile == '1')
 		return ;
 	if (target_pos.tile == 'C')

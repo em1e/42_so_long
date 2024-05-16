@@ -6,7 +6,7 @@
 #    By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 11:14:33 by vkettune          #+#    #+#              #
-#    Updated: 2024/05/10 17:44:36 by vkettune         ###   ########.fr        #
+#    Updated: 2024/05/16 08:29:23 by vkettune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +46,12 @@ BONUS_DIR = bonus/
 OBJS_DIR = objs/
 
 FILES = errors_and_free.c game.c init_grid.c \
- main.c init_map.c inst.c init_images.c move_player.c \
+ main.c init_map.c utils.c init_images.c move_player.c \
  place_img.c resize.c check_path.c hooks.c coin_img.c
 BONUS_FILES = animate_player_bonus.c animate_door_bonus.c \
 	check_path_bonus.c errors_and_free_bonus.c game_bonus.c hooks_bonus.c \
 	init_grid_bonus.c init_images_bonus.c init_map_bonus.c \
-	inst_bonus.c main_bonus.c move_player_bonus.c place_img_bonus.c \
+	utils_bonus.c main_bonus.c move_player_bonus.c place_img_bonus.c \
 	place_moves_bonus.c resize_bonus.c coin_img_bonus.c enemy_bonus.c
 
 SOURCES = $(addprefix $(SRCS_DIR), $(FILES))

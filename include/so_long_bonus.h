@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 04:03:48 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/12 08:48:44 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/16 08:39:43 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,10 +182,12 @@ int				check_map_content(t_map *map, int scale[]);
 int				check_map(t_map *map, char *file, int scale[]);
 t_map			*init_map(char *file);
 
-// inst.c
+// utils.c
 mlx_instance_t	*get_tile(t_map *map, int y, int x);
 mlx_instance_t	*get_object(t_map *map, int y, int x);
 mlx_instance_t	*get_player(t_map *map);
+int	check_and_depth(t_map *map, t_grid *pos);
+void place_enemy(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images);
 
 // main.c
 int				main(int argc, char **argv);

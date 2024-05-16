@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:44:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/10 21:52:02 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:36:06 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 	}
 	else if (pos->tile == 'D')
 	{
-		map->enemy.img = images->e_asleep_im;
-		pos->obj_inst = mlx_image_to_window(mlx, map->enemy.img,
-				pos->y * map->tile_size, pos->x * map->tile_size);
-		pos->obj_img = map->enemy.img;
+		place_enemy(mlx, map, pos, images);
+		ft_printf("enemy placed at (x, y): %d, %d\n", pos->x, pos->y);	
 	}
+	if (pos->obj_inst == -1)
+		return (0);
 	mlx_set_instance_depth(get_object(map, pos->x, pos->y), 1);
 	return (1);
 }
@@ -71,7 +71,7 @@ int	place_player(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 		pos->x * map->tile_size);	
 	if (map->player.inst == -1)
 		return (0);
-	mlx_set_instance_depth(get_player(map), 2);
+	mlx_set_instance_depth(get_player(map), 5);
 	return (1);
 }
 
