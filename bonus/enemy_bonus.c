@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 17:14:50 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/16 17:19:57 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:48:34 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	wake_enemy(t_map *map, int x, int y)
 	tmp = awake_img;
 	if (enemy->awake == 1)
 		return ;
-	ft_memcpy(img->pixels, awake_img->pixels,
-		img->width * img->height * sizeof(int32_t));
+	map->images.e_asleep_im->instances[map->enemy.inst].enabled = false;
+	map->images.e_awake_im->instances[map->enemy.inst2].enabled = true;
 	enemy->awake = 1;
 	ft_printf("You woke the enemy!\n"); //remove
 }
@@ -41,21 +41,17 @@ void	enemy_fall_asleep(t_map *map)
 {
 	t_enemy	*enemy;
 	mlx_image_t	*asleep_img;
-	mlx_image_t	*img;
-	mlx_image_t	*tmp;
 	t_grid	*pos;
 
 	enemy = &map->enemy;
 	asleep_img = map->images.e_asleep_im;
-	img = map->enemy.img;
 	ft_printf("BB enemy y: %d, x: %d\n", enemy->y, enemy->x); //remove
 	pos = &map->grid[enemy->y][enemy->x];
 	ft_printf("BB enemy tile: %c\n", pos->tile); //remove
-	tmp = asleep_img;
 	if (enemy->awake == 0)
 		return ;
-	ft_memcpy(img->pixels, asleep_img->pixels,
-		img->width * img->height * sizeof(int32_t));
+	map->images.e_asleep_im->instances[map->enemy.inst].enabled = true;
+	map->images.e_awake_im->instances[map->enemy.inst2].enabled = false;
 	enemy->awake = 0;
 	ft_printf("The enemy fell asleep!\n"); //remove
 }

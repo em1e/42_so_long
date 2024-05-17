@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 04:03:48 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/16 08:39:43 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:21:19 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_enemy
 	int					awake;
 	mlx_image_t			*img;
 	int					inst;
+	int					inst2;
 }	t_enemy;
 
 typedef struct s_map

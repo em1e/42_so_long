@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:44:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/16 16:36:06 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:36:51 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 		pos->obj_inst = mlx_image_to_window(mlx, images->door_closed,
 				pos->y * map->tile_size, pos->x * map->tile_size);
 		pos->obj_img = images->door_closed;
+		mlx_set_instance_depth(get_object(map, pos->x, pos->y), 1);
 	}
 	else if (pos->tile == 'C')
 	{
@@ -49,15 +50,16 @@ int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 				pos->x * map->tile_size + (map->tile_size * 0.2));
 		pos->obj_img = images->coin_im;
 		images->coin_im = change_coin_img(mlx, map);
+		mlx_set_instance_depth(get_object(map, pos->x, pos->y), 1);
 	}
 	else if (pos->tile == 'D')
 	{
+		ft_printf("1 tetss\n");
 		place_enemy(mlx, map, pos, images);
 		ft_printf("enemy placed at (x, y): %d, %d\n", pos->x, pos->y);	
 	}
 	if (pos->obj_inst == -1)
 		return (0);
-	mlx_set_instance_depth(get_object(map, pos->x, pos->y), 1);
 	return (1);
 }
 
