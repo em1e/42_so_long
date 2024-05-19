@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:44:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/17 12:36:51 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:50:43 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ int	place_object(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 		mlx_set_instance_depth(get_object(map, pos->x, pos->y), 1);
 	}
 	else if (pos->tile == 'D')
-	{
-		ft_printf("1 tetss\n");
 		place_enemy(mlx, map, pos, images);
-		ft_printf("enemy placed at (x, y): %d, %d\n", pos->x, pos->y);	
-	}
 	if (pos->obj_inst == -1)
 		return (0);
 	return (1);
@@ -69,8 +65,8 @@ int	place_player(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 		return (1);
 	map->player.img = images->player_im;
 	map->player.inst = mlx_image_to_window(mlx, map->player.img,
-		pos->y * map->tile_size,
-		pos->x * map->tile_size);	
+			pos->y * map->tile_size,
+			pos->x * map->tile_size);
 	if (map->player.inst == -1)
 		return (0);
 	mlx_set_instance_depth(get_player(map), 5);

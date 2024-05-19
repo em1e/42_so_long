@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   place_text_bonus.c                                 :+:      :+:    :+:   */
+/*   place_moves_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 12:28:39 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/25 11:21:32 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:31:53 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,5 @@ void	print_movements(t_map *map)
 	mlx_delete_image(map->mlx, map->move_img);
 	map->move_img = mlx_put_string(map->mlx, text, width,
 			map->scale[1] * TILE_SIZE + 10);
-	map->moves++;
 	free(text);
-	ft_printf("Moves: %d\n", map->moves);
 }

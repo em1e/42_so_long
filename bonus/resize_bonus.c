@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:45:14 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/27 03:46:55 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:00:45 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ void	window_size_limit(mlx_t *mlx, t_map *map)
 
 	mlx_get_monitor_size(0, &monitor_size[0], &monitor_size[1]);
 	if (map->scale[0] * map->tile_size > monitor_size[0]
-		|| map->scale[1] * map->tile_size > monitor_size[1])
+		|| map->scale[1] * map->tile_size + 40 > monitor_size[1])
 	{
 		scale[0] = map->scale[0] * map->tile_size;
-		scale[1] = map->scale[1] * map->tile_size;
+		scale[1] = map->scale[1] + 40 * map->tile_size;
 		ft_printf("map width: %d\n", scale[0]);
 		ft_printf("map height: %d\n", scale[1]);
 		ft_printf("monitor width: %d\n", monitor_size[0]);
 		ft_printf("monitor height: %d\n", monitor_size[1]);
 		resize_tiles(monitor_size[0], monitor_size[1], map);
 		mlx_set_window_size(mlx, map->scale[0] * map->tile_size,
-			map->scale[1] * map->tile_size);
+			map->scale[1] + 40 * map->tile_size);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:37:32 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/10 16:10:18 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:26:09 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	start_game(t_map *map)
 	mlx_key_hook(mlx, &key_hooks, map);
 	if (mlx_loop_hook(mlx, &window_input_hook, mlx) == 0)
 		return (game_error(mlx, map, "game error B", -1));
-	ft_printf("- - - game started - - -\n\n");
+	ft_printf("- - - GAME STARTED - - -\n\n");
 	mlx_loop(mlx);
 	end_game(map, mlx, map->won);
 	return (1);

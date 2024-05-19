@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 11:08:16 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/16 16:37:52 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:48:46 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,11 @@ int	check_grid(t_map *map, t_grid **grid, int scale[], t_player *player)
 				return (0);
 			if (grid[y][x].tile == 'P')
 			{
-				ft_printf("player found at: %d,%d\n", x, y);
 				player->x = x;
 				player->y = y;
 			}
 			if (grid[y][x].tile == 'D')
-			{
-				ft_printf("TEST enemy found at (x, y): %d,%d\n", x, y);
 				found_enemy(map, y, x);
-			}
 			x++;
 		}
 		y++;
@@ -78,7 +74,6 @@ int	fill_grid(t_grid **grid, int scale[], int map_fd)
 			grid[i][j].tile = line[j];
 			j++;
 		}
-		ft_printf("line: %s", line);
 		free(line);
 		i++;
 	}
@@ -94,7 +89,8 @@ t_grid	**init_grid(t_map *map, char *file, int scale[], t_player *player)
 	map_fd = open(file, O_RDONLY);
 	if (grid == 0 || map_fd == -1)
 		return (0);
-	if (!fill_grid(grid, scale, map_fd) || !check_grid(map, grid, scale, player))
+	if (!fill_grid(grid, scale, map_fd)
+		|| !check_grid(map, grid, scale, player))
 	{
 		free_grid(grid);
 		close(map_fd);

@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 11:49:11 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/10 19:12:26 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:32:59 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	find_path(t_grid **grid, int y, int x)
 
 	symbol = grid[y][x].tile;
 	if (grid[y] == 0 || symbol == 0
-			|| symbol == '1' || symbol == 'X' || symbol == 'Y')
+		|| symbol == '1' || symbol == 'X' || symbol == 'Y')
 		return (0);
 	if (symbol == 'D')
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 12:14:46 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/17 12:47:43 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:50:59 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ mlx_instance_t	*get_player(t_map *map)
 	return (&image->instances[inst]);
 }
 
-void place_enemy(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
+void	place_enemy(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 {
 	map->enemy.inst = mlx_image_to_window(mlx, images->e_asleep_im,
 			pos->y * map->tile_size, pos->x * map->tile_size);
@@ -78,5 +78,4 @@ void place_enemy(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images)
 		ft_printf("Error: could not place enemy\n");
 	if (map->enemy.inst2 == -1)
 		ft_printf("Error: could not place enemy\n");
-	ft_printf("enemy placed\n");
 }

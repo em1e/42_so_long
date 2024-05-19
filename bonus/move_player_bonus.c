@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/16 16:12:17 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:49:22 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	move(t_map *map, int up, int right)
 	target_pos = map->grid[player->y - up][player->x + right];
 	if (map->grid[player->y][player->x].tile == 'p')
 		map->grid[player->y][player->x].tile = 'E';
+	else if (map->grid[player->y][player->x].tile == 'd')
+		map->grid[player->y][player->x].tile = 'D';
 	else
 		map->grid[player->y][player->x].tile = '0';
 	player->y -= up;
@@ -50,10 +52,16 @@ void	move(t_map *map, int up, int right)
 		map->grid[player->y][player->x].tile = 'p';
 		return ;
 	}
-	map->grid[player->y][player->x].tile = 'P';
+	else if (target_pos.tile == 'D')
+	{
+		map->grid[player->y][player->x].tile = 'd';
+		return ;
+	}
+	else
+		map->grid[player->y][player->x].tile = 'P';
 }
 
-void	move_player(t_map *map, int up, int right)
+void	move_player(t_map *map, int up, int right, int key)
 {
 	t_grid			target_pos;
 	t_player		*player;
@@ -71,10 +79,13 @@ void	move_player(t_map *map, int up, int right)
 	}
 	move(map, up, right);
 	print_movements(map);
+	map->moves++;
+	ft_printf("Moves: %d\n", map->moves);
 	move_player_texture(map, up, right);
 	if (target_pos.tile == 'E' && map->collectables == 0)
 	{
 		map->won = 1;
 		end_game(map, map->mlx, map->won);
 	}
+	is_enemy(key, map, 0);
 }

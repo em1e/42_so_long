@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 04:03:48 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/17 12:21:19 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:38:01 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ int				main(int argc, char **argv);
 void			collect(t_map *map, int y, int x);
 void			move_player_texture(t_map *map, int up, int right);
 void			move(t_map *map, int up, int right);
-void			move_player(t_map *map, int up, int right);
+void			move_player(t_map *map, int up, int right, int keydata);
 
 // place_img.c
 int				place_tile(mlx_t *mlx, t_map *map, t_grid *pos,
