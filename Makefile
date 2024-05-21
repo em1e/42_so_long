@@ -6,7 +6,7 @@
 #    By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/03 11:14:33 by vkettune          #+#    #+#              #
-#    Updated: 2024/05/16 08:29:23 by vkettune         ###   ########.fr        #
+#    Updated: 2024/05/21 08:43:21 by vkettune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CYAN = \033[0;96m
 WHITE = \033[0;97m
 
 NAME = so_long
-CFLAGS = -Wall -Wextra -Werror -g $(HEADERS)
+CFLAGS = -Wall -Wextra -Werror $(HEADERS)
 HEADERS = -I ./include -I ./libs/MLX42/include/MLX42
 
 LIBFT = ./libs/libft/libft.a
@@ -97,7 +97,7 @@ bonus: fclean folders libft mlx42 $(BONUS_OBJECTS)
 $(OBJS_DIR)%.o: $(BONUS_DIR)%.c
 	@cc $(CFLAGS) -c $< -o $@ && echo "$(DARK_GRAY)Compiled: $@ $(X)"
 
-# OTHER RULES
+# OTHER
 folders:
 	@mkdir -p $(OBJS_DIR)
 	@mkdir -p $(LIBFT_OBJ)

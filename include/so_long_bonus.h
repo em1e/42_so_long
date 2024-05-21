@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 04:03:48 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/19 20:38:01 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/21 08:15:00 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,6 @@
 # define ITEM_10 "./textures/collectable/item10.png"
 # define ITEM_11 "./textures/collectable/item11.png"
 
-typedef struct s_textures
-{
-	mlx_texture_t	*player_tx;
-	mlx_texture_t	*e_asleep_tx;
-	mlx_texture_t	*e_awake_tx;
-	mlx_texture_t	*floor_tx;
-	mlx_texture_t	*wall_tx;
-	mlx_texture_t	*door_tx;
-	mlx_texture_t	*coin_tx;
-}	t_textures;
-
 typedef struct s_images
 {
 	mlx_image_t	*player_im;
@@ -69,9 +58,9 @@ typedef struct s_images
 	mlx_image_t	*e_awake_im;
 	mlx_image_t	*floor_im;
 	mlx_image_t	*wall_im;
-	mlx_image_t	*coin_im;
 	mlx_image_t	*door_closed;
 	mlx_image_t	*door_open;
+	mlx_image_t	*coin_im;
 	int			random;
 }	t_images;
 
@@ -84,7 +73,6 @@ typedef struct s_grid
 	mlx_image_t			*obj_img;
 	int					tile_inst;
 	int					obj_inst;
-	int					exit[2];
 }	t_grid;
 
 typedef struct s_player
@@ -101,7 +89,6 @@ typedef struct s_enemy
 	int					x;
 	int					y;
 	int					awake;
-	mlx_image_t			*img;
 	int					inst;
 	int					inst2;
 }	t_enemy;
@@ -111,27 +98,21 @@ typedef struct s_map
 	t_grid		**grid;
 	mlx_t		*mlx;
 	t_player	player;
-	t_enemy		enemy;
 	t_images	images;
-	int			exit[2];
-	int			scale[2]; // height 0, width 1
-	int			direction; // 0 up, 1 dowm, 2 right, 3 left
+	t_enemy		enemy;
+	int			scale[2]; // height 1, width 0
 	int			collectables;
 	int			moves;
 	int			won;
 	int			tile_size;
-	int			player_size[2]; // height 0, width 1
 	int			item_size;
-	int			action; // idle 0, walking 1, opendoor 2
 	int			map_fd;
-	mlx_image_t	*door_open;
 	mlx_image_t	*player_animation[5];
 	mlx_image_t	*move_img;
 }	t_map;
 
 // animate_door.c
 void			open_door(t_map *map);
-void			find_door(t_map *map, int scale[], int exit[]);
 
 // animate_player.c
 int				init_player_animation(mlx_t *mlx, t_map *map);
@@ -169,9 +150,11 @@ void			anim_update_hook(void *param);
 
 // init_grid.c
 int				check_walls(t_grid **grid, int scale[], int y, int x);
-int				check_grid(t_map *map, t_grid **grid, int scale[], t_player *player);
+int				check_grid(t_map *map, t_grid **grid, int scale[],
+					t_player *player);
 int				fill_grid(t_grid **grid, int scale[], int map_fd);
-t_grid			**init_grid(t_map *map, char *file, int scale[], t_player *player);
+t_grid			**init_grid(t_map *map, char *file, int scale[],
+					t_player *player);
 
 // init_images.c
 mlx_image_t		*load_img(mlx_t *mlx, char *file);
@@ -187,8 +170,8 @@ t_map			*init_map(char *file);
 mlx_instance_t	*get_tile(t_map *map, int y, int x);
 mlx_instance_t	*get_object(t_map *map, int y, int x);
 mlx_instance_t	*get_player(t_map *map);
-int	check_and_depth(t_map *map, t_grid *pos);
-void place_enemy(mlx_t *mlx, t_map *map, t_grid *pos, t_images *images);
+void			place_enemy(mlx_t *mlx, t_map *map, t_grid *pos,
+					t_images *images);
 
 // main.c
 int				main(int argc, char **argv);

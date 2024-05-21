@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 11:36:09 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/16 08:28:54 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/21 07:56:20 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,6 @@
 # define ITEM_9 "./textures/collectable/item9.png"
 # define ITEM_10 "./textures/collectable/item10.png"
 # define ITEM_11 "./textures/collectable/item11.png"
-
-typedef struct s_textures
-{
-	mlx_texture_t	*player_tx;
-	mlx_texture_t	*floor_tx;
-	mlx_texture_t	*wall_tx;
-	mlx_texture_t	*exit_tx;
-	mlx_texture_t	*collectable_tx;
-}	t_textures;
 
 typedef struct s_images
 {
@@ -88,7 +79,6 @@ typedef struct s_map
 	int			moves;
 	int			won;
 	int			tile_size;
-	int			player_size[2];
 	int			item_size;
 }	t_map;
 

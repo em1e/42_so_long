@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 05:46:13 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/19 20:49:02 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/21 07:48:51 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,9 @@ t_map	*init_map(char *file)
 		free(map);
 		return (0);
 	}
-	find_door(map, map->scale, map->exit);
 	close(map->map_fd);
 	map->tile_size = TILE_SIZE;
 	map->item_size = TILE_SIZE * 0.6;
-	map->player_size[0] = TILE_SIZE;
-	map->player_size[1] = TILE_SIZE * 2;
 	map->won = 0;
 	return (map);
 }

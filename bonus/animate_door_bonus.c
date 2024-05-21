@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 12:48:20 by vkettune          #+#    #+#             */
-/*   Updated: 2024/04/25 11:25:13 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/21 07:48:59 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,4 @@ void	open_door(t_map *map)
 	new_img = map->images.door_open;
 	ft_memcpy(door_img->pixels, new_img->pixels,
 		door_img->width * door_img->height * sizeof(int32_t));
-}
-
-void	find_door(t_map *map, int scale[], int exit[])
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < scale[1])
-	{
-		x = 0;
-		while (x < scale[0])
-		{
-			if (map->grid[y][x].tile == 'E')
-			{
-				exit[0] = y;
-				exit[1] = x;
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
 }
