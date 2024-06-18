@@ -6,7 +6,7 @@
 /*   By: vkettune <vkettune@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:00:15 by vkettune          #+#    #+#             */
-/*   Updated: 2024/05/19 20:49:22 by vkettune         ###   ########.fr       */
+/*   Updated: 2024/05/21 09:15:15 by vkettune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	move_player(t_map *map, int up, int right, int key)
 		end_game(map, map->mlx, map->won);
 	}
 	move(map, up, right);
-	print_movements(map);
 	map->moves++;
+	print_movements(map);
 	ft_printf("Moves: %d\n", map->moves);
 	move_player_texture(map, up, right);
 	if (target_pos.tile == 'E' && map->collectables == 0)
