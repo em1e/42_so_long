@@ -52,6 +52,4 @@ Controls for movement and rotation are:
 - `S`: move backward
 - `A`: move left
 - `D`: move right
-- `left arrow`: rotate left
-- `right arrow`: rotate right
-- `mouse`: rotate by moving the mouse (bonus only)
+- `space`: kill monsters
