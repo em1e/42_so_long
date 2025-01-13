@@ -11,6 +11,7 @@ and some other very basic gameplay elements.
 ## Description
 So long is a simple 2D game. It's purpose is to familiralize yourself with game mechanics, mlx42 library as well as managing larger scale projects.
 
+[![so_long demo](https://res.cloudinary.com/marcomontalbano/image/upload/v1736770089/video_to_markdown/images/youtube--c3kqH85pSE8-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/c3kqH85pSE8 "so_long demo")
 
 ## Compile and Run
 
